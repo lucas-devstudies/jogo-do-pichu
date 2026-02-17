@@ -1,5 +1,6 @@
-# jogo-do-bicho
-Projeto com fins educacionais desenvolvido durante a disciplina de Laboratório de Produção de Software, ministrada pelo professor Ronem Lavareda no IFAM Parintins.
+![logo](assets/logo.png)
+# Jogo do Pichu
+Projeto com fins educacionais desenvolvido durante a disciplina de Laboratório de Produção de Software, ministrada pelo professor Ronem Lavareda no IFAM Parintins, com o objetivo de desenvolver um jogo do bicho.
 
 # Tecnologias Escolhidas
 - Angular (Frontend)
