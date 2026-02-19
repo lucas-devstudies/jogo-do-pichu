@@ -5,6 +5,7 @@ Projeto com fins educacionais desenvolvido durante a disciplina de Laboratório 
 # Tecnologias Escolhidas
 - Angular (Frontend)
 - Spring Boot (Backend)
+- MySQL (Banco de Dados)
 
 # API/Frameworks utilizados
 - Bootstrap (https://getbootstrap.com/docs/5.3)
