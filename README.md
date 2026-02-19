@@ -10,3 +10,5 @@ Projeto com fins educacionais desenvolvido durante a disciplina de Laboratório 
 - Bootstrap (https://getbootstrap.com/docs/5.3)
 - PokerAPI (https://pokeapi.co/about)
 
+# link do projeto no Figma
+- https://www.figma.com/design/88e1eQfMGgbBbAZTWeUenJ/Jogo-do-Pichu?node-id=18-79&t=ZAOJgHpxVcwcUsDJ-1
