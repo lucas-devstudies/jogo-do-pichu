@@ -1,0 +1,28 @@
+<div class="menu-group d-flex flex-center justify-content-center align-items-center">
+    <!-- principal -->
+    @if (select=='home') {
+        <img src="assets/icons/home-white.svg" width="24px" height="24px">
+    }@else {
+        <img src="assets/icons/home-primary.svg" width="24px" height="24px">
+    }
+    <!-- cartão -->
+    @if (select=='card') {
+        <img src="assets/icons/card-white.svg" width="24px" height="24px">
+    }@else {
+        <img src="assets/icons/card-primary.svg" width="24px" height="24px">
+    }
+
+    <!-- histórico -->
+    @if (select=='history') {
+        <img src="assets/icons/history-white.svg" width="24px" height="24px">
+    }@else {
+        <img src="assets/icons/home-primary.svg" width="24px" height="24px">
+    }
+    
+    <!-- opções -->
+    @if (select=='gear') {
+        <img src="assets/icons/gear-white.svg" width="24px" height="24px">
+    }@else {
+        <img src="assets/icons/gear-primary.svg" width="24px" height="24px">
+    }
+</div>
