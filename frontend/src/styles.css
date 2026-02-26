@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --color-primary: #6A50FF;   /* azul */
+  --color-details: #1C1C4C;   /* azul escuro para contraste */
+  --color-red: #FF0004;       /* vermelho */
+  --color-disable: #7E7E7E;   /* cor desabilitados */
+  --color-white: #fefefe;     /*cor branca */
+  --color-background:  var(--background, linear-gradient(192deg, #00001E 0.67%, #00003A 94.31%)); /*cor para bordas */
+}
