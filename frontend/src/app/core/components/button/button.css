@@ -1,0 +1,15 @@
+button{
+    color: var(--color-white);
+    background-color: var(--color-primary);
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: none;
+    height: auto;
+}
+button:hover{
+    opacity: 80%;
+}
+button:active{
+    opacity: 60%;
+}

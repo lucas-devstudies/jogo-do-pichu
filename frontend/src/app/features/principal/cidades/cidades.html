@@ -1,0 +1,19 @@
+<form class="option animacao">
+    <h2 class="fw-bold w-100 text-center">Escolha qual ou quais Regiões você deseja apostar <span class="fw-bold" style="color: var(--color-red);">(max 3)</span></h2>
+    
+    <div class="info d-flex justify-content-between">
+        <div class="info_container">
+            <h3 class="w-100 text-center">Selecionados</h3>
+            <p class="w-100 fw-bold text-center">0/9</p>
+        </div>
+        <div class="info_container">
+            <h3 class="w-100 text-center">Retorno</h3>
+            <p class="w-100 fw-bold text-center">180x</p>
+        </div>
+    </div>
+
+    <app-button
+        text="Seguinte"
+        (click)="change()"
+    ></app-button>
+</form>
