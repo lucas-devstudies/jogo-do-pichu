@@ -14,8 +14,10 @@
 
     <div class="cities">
         @for (city of cities; track $index) {
-            <p>{{city.name}}</p>
-            <img [src]='city.img'>
+            <div class="city">
+                <img [src]='city.img'>
+                <p class="fw-bold">{{city.name}}</p>
+            </div>
         }
     </div>
 
