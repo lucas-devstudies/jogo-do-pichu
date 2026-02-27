@@ -11,3 +11,14 @@
 :host(.animacao) form {
   animation: toBottom 1s ease;
 }
+.info_container{
+    width: 10rem;
+    border: 1px solid red;
+    justify-content: center;
+    align-items: center;
+}
+.info_container p{
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: var(--color-primary);
+}

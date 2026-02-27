@@ -10,5 +10,35 @@
 
 /* configuração de cores inicial */
 h2,h3,p,label{
-    color: var(--color-white);
+  font-family: "Quicksand", sans-serif;
+  color: var(--color-white);
+}
+h2{
+  font-size: 1.4rem;
+}
+h3{
+  font-size: 1.2rem;
+}
+p{
+  font-size: 1.1rem;
+}
+label{
+  font-weight: 1.2rem;
+}
+
+@keyframes toBottom {
+    from{
+        transform: translateY(+200%);
+    }
+    to{
+        transform: translateY(0);
+    }
+}
+@keyframes toTop {
+    from{
+        transform: translateY(-300%);
+    }
+    to{
+        transform: translateY(0);
+    }
 }

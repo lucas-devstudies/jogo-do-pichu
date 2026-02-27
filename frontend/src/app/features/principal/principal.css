@@ -9,9 +9,13 @@
     position: fixed;
     top: 1rem;
     margin-top: 2rem;
-    width: 25rem;
+    width: 30rem;
     height: wrap;
     background-color: var(--color-details);
     padding: 1rem;
     border-radius: 1rem;
+    animation: normal toTop 1s;
+}
+.welcome p{
+    font-size: 1.0rem;
 }

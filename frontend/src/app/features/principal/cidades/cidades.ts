@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Button } from "../../../core/components/button/button";
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-opcoes',
-  imports: [Button, FormsModule,CommonModule],
-  templateUrl: './opcoes.html',
-  styleUrl: './opcoes.css',
+  selector: 'app-cidades',
+  imports: [Button,CommonModule,FormsModule],
+  templateUrl: './cidades.html',
+  styleUrl: './cidades.css',
 })
-export class Opcoes {
+export class Cidades {
   @Input()
   extraClass = '';
 
