@@ -1,12 +1,20 @@
-<div class="custom-input w-100 gap-2" style="border: 0.05rem solid var(--border, #ADABAB);">
+<div class="custom-input w-100 gap-2" style="border: 0.05rem solid var(--color-disable);">
 
     @if(type == "name"){
         <img class="ps-2 py-1" src="assets/icons/person.svg">
     }
-    @if(type == "name"){
-        <img class="ps-2 py-1" src="assets/icons/person.svg">
+    @else if(type == "email"){
+        <img class="ps-2 py-1" src="assets/icons/email.svg">
     }
-
+    @else if(type == "password"){
+        <img class="ps-2 py-1" src="assets/icons/password.svg">
+    }
+    @else if(type == "search"){
+        <img class="ps-2 py-1" src="assets/icons/search.svg">
+    }
+    @else{
+        <img class="ps-2 py-1" src="assets/icons/card.svg">
+    }
     @if(type_input=="text" || type_input=="email"){
         <input  
             class="px-2 py-2" 
@@ -16,7 +24,6 @@
             (input)="onInputChange($event)"
             (change)="onInputChange($event)">
     }
-
 
     @else {
         <input 

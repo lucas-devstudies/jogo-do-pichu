@@ -21,14 +21,6 @@
     outline: none;
 }
 
-.custom-input:focus-within {
-    background-color: #f4f4f4;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-}
-
 .primary {
     background-color: var(--color-primary);
     color: white;
@@ -36,5 +28,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .primary:hover, .primary:active {
-    background-color: var(--color-primary-activated);
+    background-color: #dfdfdf;
 }
