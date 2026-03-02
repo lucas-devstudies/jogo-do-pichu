@@ -1,19 +1,20 @@
 package com.jogo_do_pichu.backend.infra.security;
 
 import com.jogo_do_pichu.backend.domain.user.User;
-import com.jogo_do_pichu.backend.repositories.UserRepository;
+import com.jogo_do_pichu.backend.repositories.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
+@Component
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository repository;
+    private Repository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
