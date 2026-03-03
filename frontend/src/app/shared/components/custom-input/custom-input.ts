@@ -11,7 +11,7 @@ export class CustomInput {
   @Input()
   type: "name" | "email"  | "password" | "search" | "card" = "name";
   @Input()
-  type_input: "text" | "email" | "number" = "text";
+  type_input: "text" | "password" | "email" | "number" = "text";
   @Input()
   placeholder!:string
   @Input()
