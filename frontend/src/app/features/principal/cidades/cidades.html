@@ -12,8 +12,8 @@
         </div>
     </div>
 
-    <div class="cities mb-3">
-        @for (city of cities; track $index) {
+    <div #scrollContainer class="cities mb-3">
+        @for (city of regions; track $index) {
             <app-city
                 [img]=city.img
                 [city]=city.name

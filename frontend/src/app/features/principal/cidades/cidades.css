@@ -28,16 +28,24 @@
     background-color: var(--color-primary);
 }
 .cities{
-  display: flex;
-  flex-direction: row;
+  margin-top: 1rem;
   width: 100%;
   height: auto;
-  overflow-y: hidden;
-  overflow-x: scroll;
+  display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
   justify-content: space-between;
+  scrollbar-width: none;
 
+}
+.cities:active {
+    cursor: grabbing;
+}
+
+.cities::-webkit-scrollbar {
+    display: none;
 }
 .clicado{
   border: 0.2rem solid red;
