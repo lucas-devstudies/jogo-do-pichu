@@ -1,5 +1,6 @@
 .option{
-  width: 30rem;
+  width: 90%;
+  max-width: 30rem;
   background-color: var(--color-details);
   padding: 1rem;
   border-radius: 1rem;
