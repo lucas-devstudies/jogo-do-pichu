@@ -2,10 +2,11 @@ button{
     color: var(--color-white);
     background-color: var(--color-primary);
     width: 100%;
-    padding: 1rem;
-    border-radius: 1rem;
+    padding: 1.4rem 0.6rem;
+    border-radius: 0.4rem;
     border: none;
     height: auto;
+    font-family: "Quicksand", sans-serif;
     font-size: 1rem;
 }
 button:hover{

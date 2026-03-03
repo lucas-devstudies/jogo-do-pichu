@@ -1,1 +1,35 @@
-<p>login works!</p>
+<section class="login d-flex w-100 gap-3">
+    <div class="left-login">
+        <div class="left-login-container">
+            <h3 class="fs-5 fw-bold w-100 text-center mb-3 px-3 pt-3">Acessar Conta</h3>
+                <form action="" class="d-flex flex-column w-100 gap-3 my-3 px-3">
+                    <label class="w-100 fs-6 text-start fw-bold" for="email">E-mail</label>
+                    <app-custom-input
+                        type="email"
+                        type_input="email"
+                        placeholder="email@gmail.com"
+                        [(value)]="email"
+                    ></app-custom-input>
+                    <label class="w-100 fs-6 text-start fw-bold" for="password">Senha</label>
+                    <app-custom-input
+                        type_input="password"
+                        type="password"
+                        placeholder="********"
+                        [(value)]="password"
+                    ></app-custom-input>
+                    <app-button
+                        text="Entrar"
+                        type="primary"
+                        (click)="confirmar($event)"
+                    >
+                    </app-button>
+                </form>
+                <div class="d-flex justify-content-between pb-4">
+                    <h3 class="fs-6 w-100 text-center mt-2">Não possui conta? <span class="fw-bold" (click)="reverse()" style="cursor: pointer;">Registre-se</span></h3>
+                </div>
+        </div>
+    </div>
+        <div class="right-login" style="background-color: var(--color-primary); overflow: hidden;">
+        <img style="height: 100%; background-position: center;" src="/assets/bg-register.png">
+    </div>
+</section>

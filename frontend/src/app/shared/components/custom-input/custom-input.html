@@ -1,19 +1,19 @@
-<div class="custom-input w-100 gap-2" style="border: 0.05rem solid var(--color-disable);">
+<div class="custom-input w-100" style="border: 0.05rem solid var(--color-disable);">
 
     @if(type == "name"){
-        <img class="ps-2 py-1" src="assets/icons/person.svg">
+        <img class="ps-2 py-1" src="assets/icons/person.svg" width="36px" height="36px">
     }
     @else if(type == "email"){
-        <img class="ps-2 py-1" src="assets/icons/email.svg">
+        <img class="ps-2 py-1" src="assets/icons/email.svg" width="36px" height="36px">
     }
     @else if(type == "password"){
-        <img class="ps-2 py-1" src="assets/icons/password.svg">
+        <img class="ps-2 py-1" src="assets/icons/lock.svg" width="36px" height="36px">
     }
     @else if(type == "search"){
-        <img class="ps-2 py-1" src="assets/icons/search.svg">
+        <img class="ps-2 py-1" src="assets/icons/search.svg" width="36px" height="36px">
     }
     @else{
-        <img class="ps-2 py-1" src="assets/icons/card.svg">
+        <img class="ps-2 py-1" src="assets/icons/card.svg" width="36px" height="36px">
     }
     @if(type_input=="text" || type_input=="email"){
         <input  

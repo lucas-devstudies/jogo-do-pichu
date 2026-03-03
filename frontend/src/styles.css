@@ -9,7 +9,7 @@
 }
 
 /* configuração de cores inicial */
-h2,h3,p,label{
+h2,h3,p,label,button,input{
   font-family: "Quicksand", sans-serif;
   color: var(--color-white);
 }

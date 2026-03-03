@@ -1,40 +1,42 @@
 <section class="register d-flex w-100 gap-3">
     <div class="left-register"  style="background-color: var(--color-primary); overflow: hidden;">
-        <img style="height: 100%; background-position: center;" src="/assets/logo.png">
+        <img style="height: 100%; background-position: center;" src="/assets/bg-login.png">
     </div>
     <div class="right-register">
-        <h3 class="fs-5 fw-bold w-100 text-left mb-3 px-3 pt-3">Registre-se</h3>
-        <form action="" class="d-flex flex-column w-100 gap-3 my-3 px-3">
-            <label class="w-100 fs-6 text-start fw-bold" for="name">Nome</label>
-            <app-custom-input
-                type="name"
-                type_input="text"
-                placeholder="Seu nome"
-                [(value)]="name"
-            ></app-custom-input>
-            <label class="w-100 fs-6 text-start fw-bold" for="email">Email</label>
-            <app-custom-input
-                type="email"
-                type_input="email"
-                placeholder="Seu email"
-                [(value)]="email"
-            ></app-custom-input>
-            <label class="w-100 fs-6 text-start fw-bold" for="password">Password</label>
-            <app-custom-input
-                type="password"
-                type_input="password"
-                placeholder="Seu senha"
-                [(value)]="password"
-            ></app-custom-input>
-            <app-button
-                name="Confirmar"
-                type="primary"
-                (click) = "confirmar($event)"
-            >  
-            </app-button>
-        </form>
-        <div class="right-register-content d-flex justify-content-between pb-4">
-            <h3 class="fs-6 w-100 text-center mt-2">Já possui conta? <span class="fw-bold" (click)="reverse()" style="cursor: pointer;">Acessar conta</span></h3>
+        <div class="right-register-container">
+            <h3 class="fs-5 fw-bold w-100 text-center mb-3 px-3 pt-3">Registre-se</h3>
+            <form action="" class="d-flex flex-column w-100 gap-3 my-3 px-3">
+                <label class="w-100 fs-6 text-start fw-bold" for="name">Nome</label>
+                <app-custom-input
+                    type="name"
+                    type_input="text"
+                    placeholder="Seu nome"
+                    [(value)]="name"
+                ></app-custom-input>
+                <label class="w-100 fs-6 text-start fw-bold" for="email">Email</label>
+                <app-custom-input
+                    type="email"
+                    type_input="email"
+                    placeholder="Seu email"
+                    [(value)]="email"
+                ></app-custom-input>
+                <label class="w-100 fs-6 text-start fw-bold" for="password">Password</label>
+                <app-custom-input
+                    type="password"
+                    type_input="password"
+                    placeholder="Seu senha"
+                    [(value)]="password"
+                ></app-custom-input>
+                <app-button
+                    text="Criar Conta"
+                    type="primary"
+                    (click) = "confirmar($event)"
+                >  
+                </app-button>
+            </form>
+            <div class="right-register-content d-flex justify-content-between pb-4">
+                <h3 class="fs-6 w-100 text-center mt-2">Já possui conta? <span class="fw-bold" (click)="reverse()" style="cursor: pointer;">Acessar conta</span></h3>
+            </div>
         </div>
     </div>
 </section>

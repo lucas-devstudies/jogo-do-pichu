@@ -2,8 +2,9 @@
     display: flex;
     align-items: center;
     background-color: white;
-    border-radius: 0.5rem;
+    border-radius: 0.6rem;
     overflow: hidden;
+    border: none;
     height: auto;
     justify-content: center;
 }
@@ -13,20 +14,13 @@
     padding: 0.5rem 0;
     background: transparent;
     flex: 1;
+    color: var(--color-text);
     min-width: 0;
-    line-height: 1.5;
+    line-height: 1.9;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 600;
 }
 
 .custom-input input:focus {
     outline: none;
-}
-
-.primary {
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-}
-
-.primary:hover, .primary:active {
-    background-color: #dfdfdf;
 }
