@@ -1,0 +1,31 @@
+.city{
+  display: flex;
+  flex-direction: column;
+  width: 12rem;
+  height: 12rem;
+  align-items: center;
+  background-color: var(--color-primary);
+  border-radius: 1rem;
+}
+.city img{
+  width: 12rem;
+  height: 10rem;
+  border-radius: 1rem 1rem 0 0;
+  overflow: hidden;
+  background-position: center;
+  object-fit: cover;
+}
+.city p{
+  margin-top: 0.5rem;
+}
+
+@media (max-width:700px){
+  .city{
+    display: flex;
+    min-width: 10rem;
+  }
+  .city img{
+    width: 100%;
+  }
+
+}

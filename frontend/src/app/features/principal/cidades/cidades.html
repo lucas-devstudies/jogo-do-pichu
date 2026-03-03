@@ -1,9 +1,9 @@
 <form class="option animacao">
-    <h2 class="fw-bold w-100 text-center">Escolha qual ou quais Regiões você deseja apostar <span class="fw-bold" style="color: var(--color-red);">(max 3)</span></h2>
+    <h2 class="fw-bold w-100 text-center">Selecione qual ou quais Regiões você deseja apostar <span class="fw-bold" style="color: var(--color-red);">(max 3)</span></h2>
     
     <div class="info d-flex justify-content-between">
         <div class="info_container">
-            <h3 class="w-100 text-center">Selecionados</h3>
+            <h3 class="w-100 text-center">Escolha</h3>
             <p class="w-100 fw-bold text-center">0/9</p>
         </div>
         <div class="info_container">
@@ -12,15 +12,29 @@
         </div>
     </div>
 
-    <div class="cities">
+    <div class="cities mb-3">
         @for (city of cities; track $index) {
-            <div class="city">
-                <img [src]='city.img'>
-                <p class="fw-bold">{{city.name}}</p>
-            </div>
+            <app-city
+                [img]=city.img
+                [city]=city.name
+            >
+            </app-city>
         }
     </div>
-
+    <div class="payment">
+        <div class="d-flex justify-content-between mb-2">
+            <h3 class="fw-bold d-flex">Custo</h3>
+            <div class="return d-flex">
+                <h3 class="w-100">Retorno<span class="fw-bold">R$ {{valor}}</span></h3>
+            </div>
+        </div>
+        <app-custom-input
+            type="card"
+            ngClass="card_value"
+            type_input="number"
+            placeholder="20,00"
+        ></app-custom-input>
+    </div>
     <app-button
         text="Seguinte"
         (click)="change()"

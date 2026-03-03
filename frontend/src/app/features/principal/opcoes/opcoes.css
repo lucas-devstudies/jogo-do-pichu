@@ -12,3 +12,8 @@
 :host(.animacao) form {
   animation: toBottom 1s ease;
 }
+@media(max-width:500px){
+  span{
+    display: block;
+  }
+}

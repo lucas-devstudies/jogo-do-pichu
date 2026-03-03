@@ -30,6 +30,7 @@
             type="{{type_input}}" 
             class="px-2 py-2" 
             min="0"
+            [ngClass]="customClass"
             placeholder="{{placeholder}}"
             [value]="value"
             (input)="onInputChange($event)"

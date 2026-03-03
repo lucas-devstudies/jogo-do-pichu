@@ -2,6 +2,7 @@
 .main{
     flex: 1;
     display: flex;
+    width: 100vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -21,7 +22,7 @@
 .welcome p{
     font-size: 1.0rem;
 }
-app-opcoes{
+app-opcoes,app-cidades{
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -36,7 +37,7 @@ app-opcoes{
     .welcome{
         margin-top: 0.2rem;
     }
-    app-opcoes{
+    app-opcoes,app-cidades{
         display: flex;
         width: 100%;
         flex-direction: column;

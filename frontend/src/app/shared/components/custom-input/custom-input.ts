@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CustomInputValue } from '../../types/input';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-custom-input',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './custom-input.html',
   styleUrl: './custom-input.css',
 })
@@ -12,6 +13,7 @@ export class CustomInput {
   type: "name" | "email"  | "password" | "search" | "card" = "name";
   @Input()
   type_input: "text" | "password" | "email" | "number" = "text";
+  @Input() customClass: string = '';
   @Input()
   placeholder!:string
   @Input()
