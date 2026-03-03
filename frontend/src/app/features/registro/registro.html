@@ -11,21 +11,21 @@
                     type="name"
                     type_input="text"
                     placeholder="Seu nome"
-                    [(value)]="name"
+                    [(value)]="registerDTO.name"
                 ></app-custom-input>
                 <label class="w-100 fs-6 text-start fw-bold" for="email">Email</label>
                 <app-custom-input
                     type="email"
                     type_input="email"
                     placeholder="Seu email"
-                    [(value)]="email"
+                    [(value)]="registerDTO.email"
                 ></app-custom-input>
                 <label class="w-100 fs-6 text-start fw-bold" for="password">Password</label>
                 <app-custom-input
                     type="password"
                     type_input="password"
-                    placeholder="Seu senha"
-                    [(value)]="password"
+                    placeholder="Sua senha"
+                    [(value)]="registerDTO.password"
                 ></app-custom-input>
                 <app-button
                     text="Criar Conta"

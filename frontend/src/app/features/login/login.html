@@ -8,14 +8,14 @@
                         type="email"
                         type_input="email"
                         placeholder="email@gmail.com"
-                        [(value)]="email"
+                        [(value)]="loginDTO.email"
                     ></app-custom-input>
                     <label class="w-100 fs-6 text-start fw-bold" for="password">Senha</label>
                     <app-custom-input
                         type_input="password"
                         type="password"
-                        placeholder="********"
-                        [(value)]="password"
+                        placeholder="Sua senha"
+                        [(value)]="loginDTO.password"
                     ></app-custom-input>
                     <app-button
                         text="Entrar"

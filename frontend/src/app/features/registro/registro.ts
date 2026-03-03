@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 import { Button } from "../../core/components/button/button";
-import { User } from '../../shared/models/User';
 import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user-service';
 import { CustomInput } from "../../shared/components/custom-input/custom-input";
+
+interface RegisterDTO {
+  name:string;
+  email:string;
+  password:string;
+}
 
 @Component({
   selector: 'app-registro',
@@ -11,13 +16,14 @@ import { CustomInput } from "../../shared/components/custom-input/custom-input";
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })
-export class Registro {
 
-  name: string = "";
-  email: string = "";
-  balance: BigInt = 0n;
-  cpf: string = "";
-  password: string = "";
+export class Registro {
+  
+  registerDTO:RegisterDTO = {
+    name:'',
+    email:'',
+    password:''
+  } 
 
   constructor(
     private router: Router,
@@ -26,25 +32,18 @@ export class Registro {
 
   confirmar(event:Event) {
     event.preventDefault();
-    const custom: User = {
-        name: this.name,
-        balance: this.balance,
-        email: this.email,
-        password: this.password
-      };
-
-      this.user.add(custom).subscribe({
+      this.user.add(this.registerDTO.name,this.registerDTO.email,this.registerDTO.password).subscribe({
         next: (dados) => {
           alert(`Usuário ${dados.name} cadastrado!`);
-          this.router.navigate(['home'])
+          this.router.navigate(['principal'])
           
         },
         error: (err) => {
-          console.log("Erro ao cadastrar:", err);
+          console.log(err);
         }
     });
   }
   reverse(){
-    this.router.navigate(['login'])
+    this.router.navigate(['entrar'])
   }
 }

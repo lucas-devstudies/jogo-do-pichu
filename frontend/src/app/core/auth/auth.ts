@@ -13,8 +13,8 @@ export class Auth {
 
   constructor(private http:HttpClient,private tokenService: TokenService){}
 
-  login(username:string,password:string):Observable<Token>{
-    return this.http.post<Token>(`${this.apiUrl}/auth/login/`, { username, password });
+  login(email:string,password:string):Observable<Token>{
+    return this.http.post<Token>(`${this.apiUrl}/auth/login`, { email,password });
   }
   refresh(token:string):Observable<Token>{
     return this.http.post<Token>(`${this.apiUrl}/api/user`, { token });

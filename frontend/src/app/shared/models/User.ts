@@ -1,7 +1,7 @@
 export class User{
-    id?:string | null;
+    id?:string;
     name!:string;
-    balance!:BigInt;
+    balance?:BigInt;
     email!:string;
     password!:string;
 }
