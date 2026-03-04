@@ -11,9 +11,10 @@
                 (opcaoSelecionada)="opcoesProx($event)" 
             ></app-opcoes>
         }
-        @if (atual == 'cidades') {
+        @else if (atual == 'cidades') {
             <app-cidades
                 (opcaoSelecionada)="opcoesProx($event)" 
+                (voltar)="back()"
             >    
             </app-cidades>
         }

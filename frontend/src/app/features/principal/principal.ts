@@ -25,4 +25,7 @@ export class Principal {
       this.atual='cidades';
     }
   }
+  back(){
+    this.atual='principal';
+  }
 }

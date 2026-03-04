@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { PokeapiService } from '../../../core/services/pokeapi-service';
 import { City } from "../../../core/components/city/city";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cidades',
@@ -28,12 +29,12 @@ export class Cidades implements AfterViewInit {
   });
 }
   regions;
-  constructor(private pokeapiService:PokeapiService){
+  constructor(private pokeapiService:PokeapiService,private router:Router){
     this.regions = this.pokeapiService.regions;
   }
-
   
   @Output() opcaoSelecionada = new EventEmitter<string>();
+  @Output() voltar = new EventEmitter<string>();
 
   escolhida:string = 'pokemon';
 
@@ -73,5 +74,8 @@ export class Cidades implements AfterViewInit {
       container.scrollLeft = scrollLeft - walk;
     });
   });
+  }
+  back(){
+    this.voltar.emit("voltar");
   }
 }

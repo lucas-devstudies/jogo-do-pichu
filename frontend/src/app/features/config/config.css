@@ -2,7 +2,6 @@
     flex: 1;
     display: flex;
     width: fit-content;
-    border: 1px solid red;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -19,7 +18,7 @@
     cursor: pointer;
 }
 .form-check-input{
-    background-color: var(--color-primary);
+    background-color: var(--color-background);
     border-color: var(--color-primary);
 }
 .form-check-label,.form-check-input{
@@ -29,6 +28,7 @@
 }
 .form-switch{
     width: 11rem;
+    background-image: var(--color-white);
 }
 
 .option:hover{
