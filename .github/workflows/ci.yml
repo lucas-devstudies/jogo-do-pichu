@@ -54,7 +54,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-          cache: maven
+          #cache: maven
 
       - name: Wait for MySQL
         run: |
@@ -66,4 +66,4 @@ jobs:
 
       - name: Build backend
         working-directory: backend
-        run: mvn -B -ntp clean package -Dspring.profiles.active=ci
+        run: mvn -B -ntp clean package -Dspring.profiles.active=ci -U
