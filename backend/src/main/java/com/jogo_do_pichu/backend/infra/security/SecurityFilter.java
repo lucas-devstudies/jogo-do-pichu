@@ -1,6 +1,6 @@
 package com.jogo_do_pichu.backend.infra.security;
 
-import com.jogo_do_pichu.backend.domain.user.User;
+import com.jogo_do_pichu.backend.domain.User;
 import com.jogo_do_pichu.backend.repositories.Repository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 
 @Component

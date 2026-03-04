@@ -1,6 +1,6 @@
 package com.jogo_do_pichu.backend.controllers;
 
-import com.jogo_do_pichu.backend.domain.user.User;
+import com.jogo_do_pichu.backend.domain.User;
 import com.jogo_do_pichu.backend.dto.LoginRequestDTO;
 import com.jogo_do_pichu.backend.dto.RegisterRequestDTO;
 import com.jogo_do_pichu.backend.dto.ResponseDTO;

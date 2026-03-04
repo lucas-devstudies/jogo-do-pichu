@@ -1,6 +1,6 @@
 package com.jogo_do_pichu.backend.infra.security;
 
-import com.jogo_do_pichu.backend.domain.user.User;
+import com.jogo_do_pichu.backend.domain.User;
 import com.jogo_do_pichu.backend.repositories.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

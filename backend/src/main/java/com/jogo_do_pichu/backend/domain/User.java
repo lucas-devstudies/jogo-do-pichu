@@ -1,4 +1,4 @@
-package com.jogo_do_pichu.backend.domain.user;
+package com.jogo_do_pichu.backend.domain;
 
 
 import jakarta.persistence.*;
