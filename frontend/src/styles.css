@@ -19,7 +19,7 @@ h2{
 h3{
   font-size: 1.2rem;
 }
-p{
+p,span{
   font-size: 1.1rem;
 }
 label{
@@ -32,7 +32,7 @@ label{
   h3{
     font-size: 1rem;
   }
-  p{
+  p,span{
     font-size: 0.9rem;
   }
 }

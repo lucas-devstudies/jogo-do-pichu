@@ -16,6 +16,9 @@ export class Cidades implements AfterViewInit {
   @Input()
   extraClass = '';
 
+  card:string = "";
+  valor:BigInt = 0n;
+
   @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
 
   ngAfterViewInit(): void {
@@ -25,7 +28,6 @@ export class Cidades implements AfterViewInit {
   });
 }
   regions;
-  valor:BigInt = 20n;
   constructor(private pokeapiService:PokeapiService){
     this.regions = this.pokeapiService.regions;
   }
