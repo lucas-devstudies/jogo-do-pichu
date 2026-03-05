@@ -17,6 +17,12 @@
                 (voltar)="back()"
             >    
             </app-cidades>
+        }@else if (atual == 'pokemons') {
+            <app-pokemons
+                (opcaoSelecionada)="opcoesProx($event)" 
+                (voltar)="back()"
+            >    
+            </app-pokemons>
         }
     </section>
 </div>

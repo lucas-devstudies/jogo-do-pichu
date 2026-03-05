@@ -1,0 +1,100 @@
+.menu{
+  display: flex;
+  width: 90%;
+  max-width: 30rem;
+  cursor: pointer;
+}
+.menu:hover{
+  opacity: 0.9;
+}
+.menu-item{
+  height: 3rem;
+  display: flex;
+  padding: 0.4rem 2rem;
+  background-color: var(--color-primary);
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+
+}.menu-item h3{
+  padding: 0;
+  margin: 0;
+}
+.option{
+  width: 90%;
+  max-width: 30rem;
+  background-color: var(--color-details);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+:host(.animacao) form {
+  animation: toBottom 1s ease;
+}
+.info{
+  width: 100%;
+  gap: 1rem;
+}
+.info_container{
+    width: 10rem;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.info_container p{
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: var(--color-primary);
+}
+.pokemons{
+    margin-top: 1rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 11rem;
+    height: 13rem;
+    overflow: hidden;
+    gap: 1rem;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+}
+.pokemons:active {
+    cursor: grabbing;
+}
+
+.pokemons::-webkit-scrollbar {
+    display: none;
+}
+.clicado{
+  border: 0.2rem solid red;
+}
+.search{
+  height: 3rem;
+  overflow: hidden;
+}
+.search-button{
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--color-primary);
+  font-weight: 600;
+  font-family: "Quicksand", sans-serif;
+  height: 3rem;
+}
+.search-button:hover{
+  opacity: 0.9;
+}
+.return{
+  height: auto;
+}
+.return span{
+  padding: 0.5rem;
+  margin-left: 0.4rem;
+  border-radius: 300rem;
+  background-color: var(--color-primary);
+}
+.payment{
+  margin: 1rem 0 2rem 0;
+}

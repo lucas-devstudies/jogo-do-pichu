@@ -30,7 +30,7 @@ export class Cidades implements AfterViewInit {
 }
   regions;
   constructor(private pokeapiService:PokeapiService,private router:Router){
-    this.regions = this.pokeapiService.regions;
+    this.regions = pokeapiService.getRegioes();
   }
   
   @Output() opcaoSelecionada = new EventEmitter<string>();
