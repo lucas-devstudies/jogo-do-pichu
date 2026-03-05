@@ -2,26 +2,24 @@ import { Component } from '@angular/core';
 import { Menu } from "../../core/components/menu/menu";
 import { Opcoes } from "./opcoes/opcoes";
 import { Cidades } from "./cidades/cidades";
+import { Pokemons } from "./pokemons/pokemons";
 
 @Component({
   selector: 'app-principal',
-  imports: [Menu, Opcoes, Cidades],
+  imports: [Menu, Opcoes, Cidades, Pokemons],
   templateUrl: './principal.html',
   styleUrl: './principal.css',
 })
 export class Principal {
   nome:string = 'Ronem Lavareda';
-  atual:'principal' | 'cidades' = 'principal';
-  
+  atual:'principal' | 'cidades' | 'pokemons' = 'principal';
+
   opcoesProx(valor:string){
     if(valor=='pokemon'){
-      // abrir_card_pokemons
-      alert('Pokémons selecionado')
-      
+      this.atual = 'pokemons'
+
     }
     else{
-      // abrir_card_regiões
-      // alert('Regiões selecionada')
       this.atual='cidades';
     }
   }

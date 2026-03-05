@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { Menu } from "../../core/components/menu/menu";
-import { Button } from "../../core/components/button/button";
 import { TokenService } from '../../core/services/token-service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-config',
-  imports: [Menu, Button],
+  imports: [Menu],
   templateUrl: './config.html',
   styleUrl: './config.css',
 })
