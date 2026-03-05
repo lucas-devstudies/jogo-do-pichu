@@ -35,6 +35,15 @@
     opacity: 0.9;
 }
 
+.options{
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+}
+
 @media(max-width: 700px){
     .container-fluid{
         display: flex;
