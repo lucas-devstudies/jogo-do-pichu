@@ -12,6 +12,7 @@ interface Region {
 })
 export class PokeapiService {
 
+  private urlImage = '/assets/cities';
   private baseUrl = 'https://pokeapi.co/api/v2/pokemon';
   private imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 
@@ -41,16 +42,16 @@ export class PokeapiService {
 
   getRegioes(): Region[] {
     const regions: Region[] = [
-      { name: 'Alola', img: `${this.baseUrl}/Alola.png` },
-      { name: 'Galar', img: `${this.baseUrl}/Galar.png` },
-      { name: 'Hisui', img: `${this.baseUrl}/Hisui.png` },
-      { name: 'Hoenn', img: `${this.baseUrl}/Hoenn.png` },
-      { name: 'Johto', img: `${this.baseUrl}/Johto.png` },
-      { name: 'Kalos', img: `${this.baseUrl}/Kalos.png` },
-      { name: 'Kanto', img: `${this.baseUrl}/Kanto.png` },
-      { name: 'Paldea', img: `${this.baseUrl}/Paldea.png` },
-      { name: 'Sinnoh', img: `${this.baseUrl}/Sinnoh.png` },
-      { name: 'Unova', img: `${this.baseUrl}/Unova.png` },
+      { name: 'Alola', img: `${this.urlImage}/Alola.png` },
+      { name: 'Galar', img: `${this.urlImage}/Galar.png` },
+      { name: 'Hisui', img: `${this.urlImage}/Hisui.png` },
+      { name: 'Hoenn', img: `${this.urlImage}/Hoenn.png` },
+      { name: 'Johto', img: `${this.urlImage}/Johto.png` },
+      { name: 'Kalos', img: `${this.urlImage}/Kalos.png` },
+      { name: 'Kanto', img: `${this.urlImage}/Kanto.png` },
+      { name: 'Paldea', img: `${this.urlImage}/Paldea.png` },
+      { name: 'Sinnoh', img: `${this.urlImage}/Sinnoh.png` },
+      { name: 'Unova', img: `${this.urlImage}/Unova.png` },
     ];
 
     return regions;
