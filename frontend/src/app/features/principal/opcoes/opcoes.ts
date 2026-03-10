@@ -15,7 +15,7 @@ export class Opcoes {
 
   @Output() opcaoSelecionada = new EventEmitter<string>();
 
-  escolhida:string = 'pokemon';
+  escolhida:'region'|'pokemon' = 'pokemon';
 
   change(){
     this.opcaoSelecionada.emit(this.escolhida);

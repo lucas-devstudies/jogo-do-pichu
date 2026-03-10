@@ -1,0 +1,13 @@
+.modal-result{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.option{
+    max-width: 20rem;
+}
+img{
+    width: 8rem;
+    height: 8rem;
+}

@@ -2,7 +2,8 @@
 :root {
   --color-primary: #6A50FF;   /* azul */
   --color-details: #1C1C4C;   /* azul escuro para contraste */
-  --color-red: #3EFFD8;       /* vermelho */
+  --color-red: #ff3e3e;       /* vermelho */
+  --color-warning: #3EFFD8;       /* vermelho */
   --color-disable: #7E7E7E;   /* cor desabilitados */
   --color-white: #fefefe;     /*cor branca */
   --color-background:  linear-gradient(192deg, #00001E 0.67%, #00003A 94.31%); /*cor para bordas */
@@ -25,6 +26,54 @@ p{
 label{
   font-weight: 1.2rem;
 }
+
+/* configuração de modal padrão */
+.option{
+  width: 90%;
+  max-width: 30rem;
+  background-color: var(--color-details);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.menu{
+  display: flex;
+  width: 100%;
+  max-width: 30rem;
+  cursor: pointer;
+}
+.menu:hover{
+  opacity: 0.9;
+}
+.menu-item{
+  height: 3rem;
+  display: flex;
+  padding: 0.4rem 2rem;
+  background-color: var(--color-primary);
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+
+}.menu-item h3{
+  padding: 0;
+  margin: 0;
+}
+.main{
+    flex: 1;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+}
+
+@media(max-width:400px){
+  .menu{
+    width: 90%;
+  }
+}
+
+/* Configuração de animação */
 @media (max-width:700px){
   h2{
     font-size: 1.1rem;

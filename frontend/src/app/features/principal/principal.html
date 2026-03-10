@@ -13,15 +13,12 @@
         }
         @else if (atual == 'cidades') {
             <app-cidades
-                (opcaoSelecionada)="opcoesProx($event)" 
                 (voltar)="back()"
             >    
             </app-cidades>
         }@else if (atual == 'pokemons') {
             <app-pokemons
-                (opcaoSelecionada)="opcoesProx($event)" 
-                (voltar)="back()"
-            >    
+                (voltar)="back()">    
             </app-pokemons>
         }
     </section>

@@ -8,6 +8,7 @@
     background-color: var(--color-white);
     border-radius: 1rem;
     aspect-ratio: 2/3;
+    gap: 0.2rem;
 }
 
 .pokemon img{
@@ -17,6 +18,7 @@
     overflow: hidden;
     background-position: center;
     object-fit: cover;
+    aspect-ratio: 4/4;
 }
 .number{
     margin-top: 0.5rem;
@@ -37,4 +39,8 @@
 .pokemon h3{
     color: var(--color-black);
     font-weight: 900;
+}
+
+.pokemon-selected{
+    border: 0.5rem solid var(--color-warning);
 }

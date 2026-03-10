@@ -17,7 +17,6 @@ export class Principal {
   opcoesProx(valor:string){
     if(valor=='pokemon'){
       this.atual = 'pokemons'
-
     }
     else{
       this.atual='cidades';

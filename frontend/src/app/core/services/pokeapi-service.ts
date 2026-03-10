@@ -35,11 +35,10 @@ export class PokeapiService {
       );
   }
 
-  getNumberPokemon():Observable<number>{
-    return this.http.get<{count: number}>(`${this.baseUrl}`)
-    .pipe(map(res=>res.count));
+  getNumberPokemon(): Observable<number> {
+    return this.http.get<{ count: number }>(this.baseUrl)
+      .pipe(map(res => res.count));
   }
-
   getRegioes(): Region[] {
     const regions: Region[] = [
       { name: 'Alola', img: `${this.urlImage}/Alola.png` },

@@ -22,14 +22,14 @@
                 <img class="d-flex" src="/assets/icons/next.svg" width="28px" height="28px" alt="">
             </div>
             <div class="option animacao d-flex justify-content-between" (click)="logout()">
-                <h3 class="fw-bold d-flex">Sair</h3>
+                <h3 class="fw-bold d-flex" style="color: var(--color-red);">Sair</h3>
                 <img class="d-flex" src="/assets/icons/next.svg" width="28px" height="28px" alt="">
             </div>
         </div>
     </section>
     }
     @else if(pagina=="sobre"){
-        <section class="options">
+        <section class="option">
             <app-sobre></app-sobre>
         </section>
     }

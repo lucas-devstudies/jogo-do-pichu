@@ -14,8 +14,10 @@ export class CustomInput {
   @Input()
   type_input: "text" | "password" | "email" | "number" = "text";
   @Input() customClass: string = '';
+  
   @Input()
   placeholder!:string
+  
   @Input()
   value:CustomInputValue | null = null;
 

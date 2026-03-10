@@ -13,9 +13,16 @@
     border-radius: 2rem;
 }
 .option{
+    width: 100%;
+    border-radius: 0;
     background-color: var(--color-details);
     padding: 1rem;
     cursor: pointer;
+}
+app-sobre{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .form-check-input{
     background-color: var(--color-background);
@@ -41,12 +48,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
 }
 
 @media(max-width: 700px){
     .container-fluid{
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    app-sobre{
     }
 }

@@ -6,10 +6,12 @@ import { PokeapiService } from '../../../core/services/pokeapi-service';
 import { City } from "../../../core/components/city/city";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
 import { Router } from '@angular/router';
+import { BackButton } from "../../../shared/components/back-button/back-button";
+import { ModalResults } from "../../../shared/components/modal-results/modal-results";
 
 @Component({
   selector: 'app-cidades',
-  imports: [Button, CommonModule, FormsModule, City, CustomInput],
+  imports: [Button, CommonModule, FormsModule, City, CustomInput, BackButton, ModalResults],
   templateUrl: './cidades.html',
   styleUrl: './cidades.css',
 })
@@ -19,6 +21,8 @@ export class Cidades implements AfterViewInit {
 
   card:string = "";
   valor:BigInt = 0n;
+
+  results:'confirm'|'none'='none';
 
   @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
 
@@ -33,13 +37,11 @@ export class Cidades implements AfterViewInit {
     this.regions = pokeapiService.getRegioes();
   }
   
-  @Output() opcaoSelecionada = new EventEmitter<string>();
   @Output() voltar = new EventEmitter<string>();
 
-  escolhida:string = 'pokemon';
 
   change(){
-    this.opcaoSelecionada.emit(this.escolhida);
+    this.results='confirm';
   }
   configurarScroll(){
     this.scrollContainers.forEach((containerRef: ElementRef) => {

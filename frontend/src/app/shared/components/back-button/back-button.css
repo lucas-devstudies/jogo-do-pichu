@@ -1,0 +1,16 @@
+.menu-item:hover{
+    opacity: 0.9;
+}
+.menu-item{
+    cursor: pointer;
+    height: 3rem;
+    display: flex;
+    padding: 0.4rem 2rem;
+    background-color: var(--color-primary);
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+}.menu-item h3{
+    padding: 0;
+    margin: 0;
+}
