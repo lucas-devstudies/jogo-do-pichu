@@ -16,3 +16,6 @@ img{
     animation: normal toBottom 1s;
     margin-bottom: 2rem;
 }    
+h3{
+    opacity: 0.8;
+}

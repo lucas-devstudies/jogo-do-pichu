@@ -51,16 +51,37 @@
     <div class="modal-overlay">
         <app-modal-results
             title="Atenção"
-            text="Você deseja confirmar a sua aposta no valor de R$ 20,00 em Bumbassaur?"
+            textBet="Você deseja confirmar a sua aposta no valor de R$ 20,00 em Bumbassaur?"
             text_button="Confirmar"
-            selected="prox()"
+            (selected)="next()"
+        ></app-modal-results>
+    </div>
+}@if (results=="result") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Aposta Realizada!"
+            img="assets/icons/check.png"
+            textBet="Código do Sorteio: 000231"
+            text_button="Ver resultado"
         ></app-modal-results>
     </div>
 }@if (results=="win") {
     <div class="modal-overlay">
         <app-modal-results
-            title="aa"
-            text="Você deseja confirmar a sua aposta no valor de R$ 20,00 em Bumbassaur?"
+            title="Parabéns"
+            img="assets/icons/pichu.png"
+            textBet="Você apostou R$ 20,00"
+            textReceived="e arrecadou R$ 400,00"
+            text_button="Confirmar"
+            (selected)="next()"
+        ></app-modal-results>
+    </div>
+}@if (results=="lose") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Não foi dessa vez!"
+            img="assets/icons/try-again.png"
+            textBet="Mas continue, os melhores treinadores nunca desistem!"
             text_button="Confirmar"
         ></app-modal-results>
     </div>

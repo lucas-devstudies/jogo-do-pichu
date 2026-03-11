@@ -10,10 +10,13 @@ import { Button } from "../../../core/components/button/button";
 export class ModalResults{
 
   @Input() title!:string;
-  @Input() text!:string;
+  @Input() textBet:string = "";
+  @Input() textReceived:string = "";
   @Input() img!:string;
   @Input() text_button!:string;
-  @Output() valueChange = new EventEmitter<string>();
-  @Output() selected = new EventEmitter<string>();
+  @Output() selected = new EventEmitter<boolean>();
 
+  clickButton(){
+    this.selected.emit(true);
+  }
 }

@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { PokeapiService } from '../../../core/services/pokeapi-service';
-import { Router } from '@angular/router';
 import { Button } from "../../../core/components/button/button";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
 import { PokemonCard } from "./pokemon-card/pokemon-card";
@@ -24,28 +23,44 @@ export class Pokemons {
 
   private pokeAPIService = inject(PokeapiService);
 
-  constructor(
-    private router:Router,
-  ){}
-  
-  @Input()
+  input_text:string="";
+  value:number=0;
 
-  card:string="";
-  valor:number=0;
+  start:number=0;
 
-  escolhida: string = 'pokemon';
-  results:'confirm'|'none'='none';
+  escolhida: string = 'aa';
+  results:'confirm' | 'win'|'lose' | 'result'| 'none' = 'none';
 
-  pokemons$ = this.pokeAPIService.getPokemons(24, 0);
+  pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
   pokemonNumber$ = this.pokeAPIService.getNumberPokemon();
 
   @Output() voltar = new EventEmitter<string>();
-
   
   change(){
     this.results='confirm';
   }
   back(){
     this.voltar.emit("voltar");
+  }
+  nextPokemons(){
+    if(this.start<=1326){
+      this.start+=24;
+      this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+    }
+  }
+  backPokemons(){
+    if(this.start>24){
+      this.start-=24;
+      this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+    }
+  }
+  search(){
+
+  }
+  formatedValue(value:number){
+    return value*4000.00;
+  }
+  next(){
+    this.results='win';
   }
 }

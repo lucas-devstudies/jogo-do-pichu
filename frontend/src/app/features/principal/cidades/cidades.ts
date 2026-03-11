@@ -16,15 +16,15 @@ import { ModalResults } from "../../../shared/components/modal-results/modal-res
   styleUrl: './cidades.css',
 })
 export class Cidades implements AfterViewInit {
-  @Input()
-  extraClass = '';
 
   card:string = "";
   valor:BigInt = 0n;
 
-  results:'confirm'|'win'|'none'='none';
+  regions;
+  results:'confirm' | 'win' | 'result' | 'lose' | 'none' = 'none';
 
   @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
+  @Output() voltar = new EventEmitter<string>();
 
   ngAfterViewInit(): void {
   this.configurarScroll(); 
@@ -32,15 +32,13 @@ export class Cidades implements AfterViewInit {
     this.configurarScroll();
   });
 }
-  regions;
   constructor(private pokeapiService:PokeapiService,private router:Router){
     this.regions = pokeapiService.getRegioes();
   }
   
-  @Output() voltar = new EventEmitter<string>();
 
   
-  prox(){
+  next(){
     this.results='win';
   }
 
