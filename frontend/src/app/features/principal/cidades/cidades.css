@@ -22,6 +22,14 @@
   max-width: 30rem;
   cursor: pointer;
 }
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .info_container{
     width: 10rem;
     max-width: 100%;

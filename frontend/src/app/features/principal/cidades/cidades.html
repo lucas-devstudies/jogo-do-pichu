@@ -48,9 +48,20 @@
     ></app-button>
 </form>
 @if (results=="confirm") {
-    <app-modal-results
-        img="/assets/icons/pichu.png"
-        text="aaa"
-        text_button="Confirmar"
-    ></app-modal-results>
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Atenção"
+            text="Você deseja confirmar a sua aposta no valor de R$ 20,00 em Bumbassaur?"
+            text_button="Confirmar"
+            selected="prox()"
+        ></app-modal-results>
+    </div>
+}@if (results=="win") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="aa"
+            text="Você deseja confirmar a sua aposta no valor de R$ 20,00 em Bumbassaur?"
+            text_button="Confirmar"
+        ></app-modal-results>
+    </div>
 }

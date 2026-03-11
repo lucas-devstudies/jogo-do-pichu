@@ -22,7 +22,7 @@ export class Cidades implements AfterViewInit {
   card:string = "";
   valor:BigInt = 0n;
 
-  results:'confirm'|'none'='none';
+  results:'confirm'|'win'|'none'='none';
 
   @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
 
@@ -39,6 +39,10 @@ export class Cidades implements AfterViewInit {
   
   @Output() voltar = new EventEmitter<string>();
 
+  
+  prox(){
+    this.results='win';
+  }
 
   change(){
     this.results='confirm';
