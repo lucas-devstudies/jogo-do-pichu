@@ -17,8 +17,8 @@ export class UserService {
 
   constructor(private http:HttpClient, private tokenService:TokenService){}
 
-  add(name:string,email:string,password:string):Observable<Token>{
-    return this.http.post<Token>(`${this.caminho}/auth/register`,{name,email,password});
+  add(name:string,email:string,password:string,theme:string):Observable<Token>{
+    return this.http.post<Token>(`${this.caminho}/auth/register`,{name,email,password,theme});
   }
   update(data: User): Observable<User> {
     const headers = this.tokenService.getAuthHeaders();

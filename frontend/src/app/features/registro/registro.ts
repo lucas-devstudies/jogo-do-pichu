@@ -8,6 +8,7 @@ interface RegisterDTO {
   name:string;
   email:string;
   password:string;
+  theme:string;
 }
 
 @Component({
@@ -22,7 +23,8 @@ export class Registro {
   registerDTO:RegisterDTO = {
     name:'',
     email:'',
-    password:''
+    password:'',
+    theme:''
   } 
 
   constructor(
@@ -32,7 +34,7 @@ export class Registro {
 
   confirmar(event:Event) {
     event.preventDefault();
-      this.user.add(this.registerDTO.name,this.registerDTO.email,this.registerDTO.password).subscribe({
+      this.user.add(this.registerDTO.name,this.registerDTO.email,this.registerDTO.password,this.registerDTO.theme).subscribe({
         next: (dados) => {
           alert(`Usuário ${dados.name} cadastrado!`);
           this.router.navigate(['principal'])

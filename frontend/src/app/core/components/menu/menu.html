@@ -6,17 +6,17 @@
         <img src="assets/icons/home-primary.svg" width="28px" height="28px" (click)="toHome()">
     }
     <!-- cartão -->
-    @if (select=='card') {
+    @if (select=='account') {
         <img src="assets/icons/card-white.svg" width="28px" height="28px">
     }@else {
-        <img src="assets/icons/card-primary.svg" width="28px" height="28px">
+        <img src="assets/icons/card-primary.svg" width="28px" height="28px" (click)="toAccount()">
     }
 
     <!-- histórico -->
     @if (select=='history') {
         <img src="assets/icons/history-white.svg" width="28px" height="28px">
     }@else {
-        <img src="assets/icons/history-primary.svg" width="28px" height="28px">
+        <img src="assets/icons/history-primary.svg" width="28px" height="28px" (click)="toHistory()">
     }
     
     <!-- opções -->

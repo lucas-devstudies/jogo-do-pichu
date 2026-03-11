@@ -1,10 +1,12 @@
 .main{
     flex: 1;
     display: flex;
-    width: 100vw;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 .welcome{
     position: fixed;
@@ -21,12 +23,14 @@
 .welcome p{
     font-size: 1.0rem;
 }
-app-opcoes,app-cidades{
+app-opcoes,app-cidades,app-pokemons{
     display: flex;
     width: 100%;
     flex-direction: column;
-    align-items: center;
     z-index: 2;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
 }
 @media(max-width: 700px){
     .container-fluid{
@@ -36,7 +40,7 @@ app-opcoes,app-cidades{
     .welcome{
         margin-top: 0.2rem;
     }
-    app-opcoes,app-cidades{
+    app-opcoes,app-cidades,app-pokemons{
         display: flex;
         width: 100%;
         flex-direction: column;

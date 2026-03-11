@@ -1,0 +1,70 @@
+<div class="container-fluid m-0 p-0 d-flex flex-row">
+    <app-menu class="vh-100" select="account"></app-menu>
+    <section class="main gap-3">
+        <div class="option d-flex flex-row justify-content-start gap-2">
+            <div class="perfil">
+                <img src="assets/icons/treinador.jpeg" alt="">
+            </div>
+            <div class="perfil_data d-flex flex-column h-100 align-items gap-2">
+                <h3 class="w-100 fw-bold m-0">Ronem Lavareda</h3>
+                <p class="w-100 m-0">Email: <span>ronem@gmail.com</span></p>
+            </div>
+        </div>
+
+        <div class="option d-flex flex-column justify-content-start gap-2 align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <p>Saldo</p>
+                @if (eye=='open') {
+                    <div class="card-user d-flex" (click)="changeState()">
+                        <img class="d-flex" src="assets/icons/eye-open.svg" width="24px" height="24px">
+                    </div>
+                }@else {
+                    <div class="card-user d-flex" (click)="changeState()">
+                        <img class="d-flex" src="assets/icons/eye-close.svg" width="24px" height="24px">
+                    </div>
+                }
+            </div>
+            @if (eye=="open") {
+                <h2 class="fw-bold">R$ 1000,00</h2>
+            }@else {
+                <h2 class="fw-bold">R$ ***,**</h2>
+            }
+            <hr>
+            <div class="card-buttom d-flex w-100 gap-3">
+                <div class="button-card w-100 gap-2">
+                    <img src="assets/icons/deposit.svg" alt="">
+                    <p class="m-0">Depositar</p>
+                </div>
+                <div class="button-card w-100 gap-2">
+                    <img src="assets/icons/sake.svg" alt="">
+                    <p class="m-0">Sacar</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="option animacao end">
+            <h3 class="fw-bold">Histórico de Transferências</h3>
+            @if(historical.length>0){
+                <div class="accordion mt-2 w-100" data-bs-theme="dark" id="accordionPanelsStayOpenExample">
+                    @for (item of historical; track $index) {}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                a
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @else {
+                <img src="assets/icons/not-found.png">
+                <p class="text-center">O Pichu procurou tanto<br>que voltou evoluído</p>
+            }
+        </div>
+    </section>
+</div>

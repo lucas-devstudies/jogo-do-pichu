@@ -1,10 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { PokeapiService } from '../../../core/services/pokeapi-service';
-import { Router } from '@angular/router';
 import { Button } from "../../../core/components/button/button";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
 import { PokemonCard } from "./pokemon-card/pokemon-card";
 import { CommonModule } from '@angular/common';
+import { ModalResults } from "../../../shared/components/modal-results/modal-results";
+import { BackButton } from "../../../shared/components/back-button/back-button";
+import { Router } from '@angular/router';
 
 interface Pokemon{
   id:number;
@@ -14,41 +16,65 @@ interface Pokemon{
 
 @Component({
   selector: 'app-pokemons',
-  imports: [Button, CustomInput, PokemonCard,CommonModule],
+  imports: [Button, CustomInput, PokemonCard, CommonModule, ModalResults, BackButton],
   templateUrl: './pokemons.html',
   styleUrl: './pokemons.css',
 })
 export class Pokemons {
 
+
+  constructor(private router:Router){}
+
   private pokeAPIService = inject(PokeapiService);
 
-  constructor(
-    private router:Router,
-    private cdr: ChangeDetectorRef
-  ){
-    this.pokeAPIService.getNumberPokemon().subscribe(res=>{
-      this.pokemonNumber=res;
-    });
-  }
-  
-  @Input()
+  input_text:string="";
+  value:number=0;
 
-  card:string="";
-  valor:number=0;
+  start:number=0;
 
-  pokemonNumber!:number;
-  escolhida: string = 'pokemon';
+  escolhida: string = 'aa';
+  results:'confirm' | 'win'|'lose' | 'result'| 'none' = 'none';
 
-  pokemons$ = this.pokeAPIService.getPokemons(21, 0);
+  pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+  pokemonNumber$ = this.pokeAPIService.getNumberPokemon();
 
-  @Output() opcaoSelecionada = new EventEmitter<string>();
   @Output() voltar = new EventEmitter<string>();
 
-  change(){
-    this.opcaoSelecionada.emit(this.escolhida);
+  nextPokemons(){
+    if(this.start<=1001){
+      this.start+=24;
+      if(this.start==1008){
+        this.pokemons$ = this.pokeAPIService.getPokemons(13, this.start);
+      }else{
+        this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+      }
+    }
   }
-
+  backPokemons(){
+    if(this.start>=24){
+      this.start-=24;
+      this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+    }
+  }
+  change(){
+    this.results='confirm';
+  }
+  next(){
+    this.results='result';
+  }
   back(){
     this.voltar.emit("voltar");
+  }
+  search(){
+
+  }
+  formatedValue(value:number){
+    return value*4000.00;
+  }
+  showResult(){
+    this.results='win';
+  }
+  closeModal(){
+    this.back();
   }
 }
