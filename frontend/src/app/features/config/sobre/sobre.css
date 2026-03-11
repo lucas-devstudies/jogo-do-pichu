@@ -1,3 +1,9 @@
+.menu{
+  display: flex;
+  width: 90%;
+  max-width: 30rem;
+  cursor: pointer;
+}
 img{
     display: flex;
     width: 90%;

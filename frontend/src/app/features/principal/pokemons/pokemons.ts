@@ -6,6 +6,7 @@ import { PokemonCard } from "./pokemon-card/pokemon-card";
 import { CommonModule } from '@angular/common';
 import { ModalResults } from "../../../shared/components/modal-results/modal-results";
 import { BackButton } from "../../../shared/components/back-button/back-button";
+import { Router } from '@angular/router';
 
 interface Pokemon{
   id:number;
@@ -21,6 +22,9 @@ interface Pokemon{
 })
 export class Pokemons {
 
+
+  constructor(private router:Router){}
+
   private pokeAPIService = inject(PokeapiService);
 
   input_text:string="";
@@ -35,24 +39,31 @@ export class Pokemons {
   pokemonNumber$ = this.pokeAPIService.getNumberPokemon();
 
   @Output() voltar = new EventEmitter<string>();
-  
-  change(){
-    this.results='confirm';
-  }
-  back(){
-    this.voltar.emit("voltar");
-  }
+
   nextPokemons(){
-    if(this.start<=1326){
+    if(this.start<=1001){
       this.start+=24;
-      this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+      if(this.start==1008){
+        this.pokemons$ = this.pokeAPIService.getPokemons(13, this.start);
+      }else{
+        this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+      }
     }
   }
   backPokemons(){
-    if(this.start>24){
+    if(this.start>=24){
       this.start-=24;
       this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
     }
+  }
+  change(){
+    this.results='confirm';
+  }
+  next(){
+    this.results='result';
+  }
+  back(){
+    this.voltar.emit("voltar");
   }
   search(){
 
@@ -60,7 +71,10 @@ export class Pokemons {
   formatedValue(value:number){
     return value*4000.00;
   }
-  next(){
+  showResult(){
     this.results='win';
+  }
+  closeModal(){
+    this.back();
   }
 }

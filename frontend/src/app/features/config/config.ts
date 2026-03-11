@@ -23,4 +23,7 @@ export class Config {
   toConfig(){
     this.pagina="sobre";
   }
+  back(){
+    this.pagina="config";
+  }
 }

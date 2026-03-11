@@ -18,7 +18,7 @@ import { ModalResults } from "../../../shared/components/modal-results/modal-res
 export class Cidades implements AfterViewInit {
 
   card:string = "";
-  valor:BigInt = 0n;
+  value:number = 0;
 
   regions;
   results:'confirm' | 'win' | 'result' | 'lose' | 'none' = 'none';
@@ -34,16 +34,6 @@ export class Cidades implements AfterViewInit {
 }
   constructor(private pokeapiService:PokeapiService,private router:Router){
     this.regions = pokeapiService.getRegioes();
-  }
-  
-
-  
-  next(){
-    this.results='win';
-  }
-
-  change(){
-    this.results='confirm';
   }
   configurarScroll(){
     this.scrollContainers.forEach((containerRef: ElementRef) => {
@@ -79,7 +69,24 @@ export class Cidades implements AfterViewInit {
     });
   });
   }
+  next(){
+    this.results='result';
+  }
+
+  change(){
+    this.results='confirm';
+  }
+  
   back(){
     this.voltar.emit("voltar");
+  }
+  formatedValue(value:number){
+    return value*180;
+  }
+  showResult(){
+    this.results='lose';
+  }
+  closeModal(){
+    this.back();
   }
 }

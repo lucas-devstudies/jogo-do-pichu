@@ -30,7 +30,9 @@
     }
     @else if(pagina=="sobre"){
         <section class="options">
-            <app-sobre></app-sobre>
+            <app-sobre
+                (voltar)="back()"
+            ></app-sobre>
         </section>
     }
 </div>

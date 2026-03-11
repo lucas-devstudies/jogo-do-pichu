@@ -79,6 +79,16 @@
             (selected)="next()"
         ></app-modal-results>
     </div>
+}@if (results == "result") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Aposta Realizada!"
+            img="assets/icons/check.png"
+            textBet="Código do Sorteio: 000231"
+            text_button="Ver resultado"
+            (selected)="showResult()"
+        ></app-modal-results>
+    </div>
 }@if (results == "win") {
     <div class="modal-overlay">
         <app-modal-results
@@ -87,7 +97,7 @@
             textBet="Você apostou R$ 20,00"
             textReceived="e arrecadou R$ 400,00"
             text_button="Confirmar"
-            (selected)="next()"
+            (selected)="closeModal()"
         ></app-modal-results>
     </div>
 }@if (results == "lose") {
@@ -97,15 +107,7 @@
             img="assets/icons/try-again.png"
             textBet="Mas continue, os melhores treinadores nunca desistem!"
             text_button="Confirmar"
-        ></app-modal-results>
-    </div>
-}@if (results == "result") {
-    <div class="modal-overlay">
-        <app-modal-results
-            title="Aposta Realizada!"
-            img="assets/icons/check.png"
-            textBet="Código do Sorteio: 000231"
-            text_button="Ver resultado"
+            (selected)="closeModal()"
         ></app-modal-results>
     </div>
 }
