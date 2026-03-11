@@ -102,3 +102,21 @@ label{
         transform: translateY(0);
     }
 }
+
+
+/*Configurando css padrão do bootstrap*/
+/* MODO CLARO */
+[data-bs-theme="light"] {
+  --bs-accordion-active-color:var(--color-white);
+  --bs-body-bg: background: linear-gradient(180deg, #EEE 0%, #FFDDC4 100%);
+  --bs-body-color: #ffffff;
+  --bs-primary: var(--color-primary);
+}
+
+/* MODO ESCURO */
+[data-bs-theme="dark"] {
+  --bs-accordion-active-color:var(--color-white);
+  --bs-body-bg: var(--color-background);
+  --bs-body-color: #ffffff;
+  --bs-primary: var(--color-primary);
+}

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class Menu {
   @Input()
-  select:'home' | 'card' | 'history' | 'gear' = 'home';
+  select:'home' | 'account' | 'history' | 'gear' = 'home';
 
   constructor(private router:Router){}
 
@@ -18,5 +18,11 @@ export class Menu {
   }
   toHome(){
     this.router.navigate(['principal']);
+  }
+  toAccount(){
+    this.router.navigate(['account']);
+  }
+  toHistory(){
+    this.router.navigate(['history']);
   }
 }

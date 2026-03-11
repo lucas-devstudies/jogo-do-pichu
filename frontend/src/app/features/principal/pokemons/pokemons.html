@@ -2,7 +2,7 @@
     <app-back-button (click)="back()"></app-back-button>
 </div>
 
-<form class="option animacao mb-5">
+<form class="option animacao">
     <h2 class="fw-bold w-100 text-center">
         Selecione qual ou quais Pokémons você deseja apostar
         <span class="fw-bold" style="color: var(--color-warning);">(max 3)</span>
@@ -53,12 +53,13 @@
                 <h3 class="w-100">Retorno<span class="fw-bold">R$ {{ formatedValue(value) }}</span></h3>
             </div>
         </div>
+        
         <app-custom-input
-            type="card"
-            class="card_value"
-            type_input="number"
-            placeholder="20,00"
-            [(value)]="value"
+        type="card"
+        class="card_value"
+        type_input="number"
+        placeholder="20,00"
+        [(value)]="value"
         ></app-custom-input>
     </div>
 

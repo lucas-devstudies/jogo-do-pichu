@@ -4,4 +4,5 @@ export class User{
     balance?:BigInt;
     email!:string;
     password!:string;
+    theme!:string;
 }
