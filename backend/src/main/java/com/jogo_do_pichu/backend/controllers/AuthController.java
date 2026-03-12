@@ -5,7 +5,7 @@ import com.jogo_do_pichu.backend.dto.LoginRequestDTO;
 import com.jogo_do_pichu.backend.dto.RegisterRequestDTO;
 import com.jogo_do_pichu.backend.dto.ResponseDTO;
 import com.jogo_do_pichu.backend.infra.security.TokenService;
-import com.jogo_do_pichu.backend.repositories.Repository;
+import com.jogo_do_pichu.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +21,13 @@ import java.util.Optional;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final Repository repository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-        User user = this.repository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        User user = this.userRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         //Verificação se senhas forem iguais
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
@@ -40,7 +40,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
 
-        Optional<User> userTest = this.repository.findByEmail(body.email());
+        Optional<User> userTest = this.userRepository.findByEmail(body.email());
 
         if (userTest.isEmpty()) {
             User user = new User();
@@ -48,7 +48,7 @@ public class AuthController {
             user.setEmail(body.email());
             user.setTheme(body.theme());
             user.setPassword(passwordEncoder.encode(body.password()));
-            this.repository.save(user);
+            this.userRepository.save(user);
 
             String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok(new ResponseDTO(user.getName(), token));
