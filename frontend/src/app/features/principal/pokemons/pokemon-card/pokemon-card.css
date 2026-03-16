@@ -55,3 +55,6 @@
 .pokemon-selected{
     border: 0.5rem solid var(--color-warning);
 }
+.pokemon:hover{
+    scale: 1.01;
+}

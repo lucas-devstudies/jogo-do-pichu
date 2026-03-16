@@ -15,7 +15,7 @@
         </div>
         <div class="info_container">
             <h3 class="w-100 text-center">Retorno</h3>
-            <p class="w-100 fw-bold text-center">4000x</p>
+            <p class="w-100 fw-bold text-center">1000x</p>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
         <button type="button" class="search-button" (click)="search()">Pesquisar</button>
     </div>
 
-    <div #scrollContainer class="pokemons mb-3">
+    <div class="pokemons p-1 mb-3">
         @for (pokemon of pokemons$ | async; track pokemon.id) {
             <app-pokemon-card
                 [id]="pokemon.id"

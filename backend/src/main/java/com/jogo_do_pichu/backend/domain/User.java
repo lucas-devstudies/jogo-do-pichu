@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity
@@ -18,7 +19,7 @@ import java.math.BigDecimal;
 public class User{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String name;
 
@@ -29,4 +30,7 @@ public class User{
     private String password;
 
     private String theme;
+
+    @OneToMany(mappedBy = "user")
+    private List<Bet> historyBet;
 }

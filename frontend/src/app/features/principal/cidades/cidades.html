@@ -5,21 +5,21 @@
     </app-back-button>
 </div>
 <form class="option animacao">
-    <h2 class="fw-bold w-100 text-center">Selecione qual ou quais Regiões você deseja apostar <span class="fw-bold" style="color: var(--color-warning);">(max 3)</span></h2>
+    <h2 class="fw-bold w-100 text-center">Selecione qual ou quais Regiões você deseja apostar <span class="fw-bold" style="color: var(--color-warning);">(max 2)</span></h2>
     
     <div class="info d-flex justify-content-between">
         <div class="info_container">
             <h3 class="w-100 text-center">Escolha</h3>
-            <p class="w-100 fw-bold text-center">0/9</p>
+            <p class="w-100 fw-bold text-center">0/10</p>
         </div>
         <div class="info_container">
             <h3 class="w-100 text-center">Retorno</h3>
-            <p class="w-100 fw-bold text-center">180x</p>
+            <p class="w-100 fw-bold text-center">7x</p>
         </div>
     </div>
 
-    <div #scrollContainer class="cities mb-3">
-        @for (city of regions; track $index) {
+    <div class="cities mb-3 p-1">
+        @for (city of regions$; track $index) {
             <app-city
                 [img]=city.img
                 [city]=city.name
