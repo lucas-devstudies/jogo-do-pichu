@@ -24,7 +24,7 @@ export class Registro {
     name:'',
     email:'',
     password:'',
-    theme:''
+    theme:'Dark'
   } 
 
   constructor(

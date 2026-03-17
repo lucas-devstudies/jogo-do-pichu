@@ -15,7 +15,7 @@ import { ModalResults } from "../../../shared/components/modal-results/modal-res
   templateUrl: './cidades.html',
   styleUrl: './cidades.css',
 })
-export class Cidades {
+export class Cidades implements AfterViewInit {
 
   card:string = "";
   value:number = 0;
@@ -25,8 +25,31 @@ export class Cidades {
   regions$ = this.pokeAPIService.getRegioes();
   results:'confirm' | 'win' | 'result' | 'lose' | 'none' = 'none';
 
+  @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
   @Output() voltar = new EventEmitter<string>();
 
+  ngAfterViewInit(): void {
+    this.configurarScroll(); 
+    this.scrollContainers.changes.subscribe(() => {
+      this.configurarScroll();
+    });
+  }
+  configurarScroll(){
+    this.scrollContainers.forEach((containerRef: ElementRef) => {
+    const container = containerRef.nativeElement;
+
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    container.addEventListener('mousedown', (e: MouseEvent) => {
+      isDown = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+      e.preventDefault();
+    });
+  })}
   next(){
     this.results='result';
   }

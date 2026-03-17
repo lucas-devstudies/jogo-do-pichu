@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     private String name;
 
     @Column(nullable = false)
@@ -29,7 +31,8 @@ public class User{
     private String email;
     private String password;
 
-    private String theme;
+    @Enumerated(EnumType.STRING)
+    private TypeTheme theme;
 
     @OneToMany(mappedBy = "user")
     private List<Bet> historyBet;

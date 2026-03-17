@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable,map } from 'rxjs';
+import { Observable,map, of } from 'rxjs';
 
 interface Region {
+  id:number;
   name: string;
   img: string;
 }
@@ -39,20 +40,20 @@ export class PokeapiService {
     return this.http.get<{ count: number }>(this.baseUrl)
       .pipe(map(res => res.count));
   }
-  getRegioes(): Region[] {
-    const regions: Region[] = [
-      { name: 'Alola', img: `${this.urlImage}/Alola.png` },
-      { name: 'Galar', img: `${this.urlImage}/Galar.png` },
-      { name: 'Hisui', img: `${this.urlImage}/Hisui.png` },
-      { name: 'Hoenn', img: `${this.urlImage}/Hoenn.png` },
-      { name: 'Johto', img: `${this.urlImage}/Johto.png` },
-      { name: 'Kalos', img: `${this.urlImage}/Kalos.png` },
-      { name: 'Kanto', img: `${this.urlImage}/Kanto.png` },
-      { name: 'Paldea', img: `${this.urlImage}/Paldea.png` },
-      { name: 'Sinnoh', img: `${this.urlImage}/Sinnoh.png` },
-      { name: 'Unova', img: `${this.urlImage}/Unova.png` },
+  getRegioes(): Observable<Region[]> {
+    const region: Region[] = [
+      {id:1, name: 'Alola', img: `${this.urlImage}/Alola.png` },
+      {id:2, name: 'Galar', img: `${this.urlImage}/Galar.png` },
+      {id:3, name: 'Hisui', img: `${this.urlImage}/Hisui.png` },
+      {id:4, name: 'Hoenn', img: `${this.urlImage}/Hoenn.png` },
+      {id:5, name: 'Johto', img: `${this.urlImage}/Johto.png` },
+      {id:6, name: 'Kalos', img: `${this.urlImage}/Kalos.png` },
+      {id:7, name: 'Kanto', img: `${this.urlImage}/Kanto.png` },
+      {id: 8, name: 'Paldea', img: `${this.urlImage}/Paldea.png` },
+      {id:9, name: 'Sinnoh', img: `${this.urlImage}/Sinnoh.png` },
+      {id:10, name: 'Unova', img: `${this.urlImage}/Unova.png` },
     ];
 
-    return regions;
+    return of(region);
   }
 }

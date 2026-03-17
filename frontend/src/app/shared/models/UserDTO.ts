@@ -1,8 +1,6 @@
-export class User{
-    id?:string;
+export class UserDTO{
     name!:string;
     balance?:number;
     email!:string;
-    password!:string;
     theme!:string;
 }

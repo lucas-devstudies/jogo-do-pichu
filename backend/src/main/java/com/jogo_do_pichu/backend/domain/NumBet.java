@@ -17,12 +17,11 @@ import lombok.Setter;
 public class NumBet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int number;
 
     //Tem o cascade persiste pra que eu consiga salvar aposta sem precisar salvar cada número individualmente
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonIgnoreProperties("listNumber")
     private Bet bet;
 }

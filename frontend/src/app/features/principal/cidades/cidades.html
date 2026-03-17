@@ -18,8 +18,8 @@
         </div>
     </div>
 
-    <div class="cities mb-3 p-1">
-        @for (city of regions$; track $index) {
+    <div #scrollContainer class="cities mb-3 p-1">
+        @for (city of regions$ | async; track city.id) {
             <app-city
                 [img]=city.img
                 [city]=city.name

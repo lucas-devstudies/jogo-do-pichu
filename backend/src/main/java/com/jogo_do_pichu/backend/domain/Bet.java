@@ -21,11 +21,10 @@ import java.util.List;
 public class Bet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    @JsonIgnoreProperties("historyBet")
     private User user;
 
     @Enumerated(EnumType.STRING)

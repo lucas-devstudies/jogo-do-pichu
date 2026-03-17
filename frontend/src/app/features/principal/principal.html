@@ -3,7 +3,7 @@
     <section class="main">
         @if (atual == 'principal') {
             <div class="welcome">
-                <h3>Olá, <span class="fw-bold">{{nome}}!</span></h3>
+                <h3>Olá, <span class="fw-bold">{{ ( me$ | async )?.name }}!</span></h3>
                 <p>Que tal apostar no seu <span class="fw-bold">Pokémon</span> ou <span class="fw-bold">Região favoritos?</span></p>
             </div>
             <app-opcoes
