@@ -6,6 +6,7 @@ import com.jogo_do_pichu.backend.dto.RegisterRequestDTO;
 import com.jogo_do_pichu.backend.dto.ResponseDTO;
 import com.jogo_do_pichu.backend.infra.security.TokenService;
 import com.jogo_do_pichu.backend.repositories.UserRepository;
+import com.jogo_do_pichu.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,7 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+    private final UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
@@ -36,23 +38,15 @@ public class AuthController {
         }
         return ResponseEntity.badRequest().build();
     }
-
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
 
-        Optional<User> userTest = this.userRepository.findByEmail(body.email());
-
-        if (userTest.isEmpty()) {
-            User user = new User();
-            user.setName(body.name());
-            user.setEmail(body.email());
-            user.setTheme(body.theme());
-            user.setPassword(passwordEncoder.encode(body.password()));
-            this.userRepository.save(user);
-
+        try {
+            User user = userService.save(body);
             String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok(new ResponseDTO(user.getName(), token));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.badRequest().build();
     }
 }
