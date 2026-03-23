@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 public enum TypeBet {
-    POKEMON("Pokemon",1025,5,1000),
-    REGION("Region",10,2,7);
+    POKEMON("POKEMON",1025,5,1000),
+    REGION("REGION",10,2,7);
 
     private final String name;
     private final int sizeBet;

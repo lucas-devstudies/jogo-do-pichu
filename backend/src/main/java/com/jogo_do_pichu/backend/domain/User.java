@@ -1,6 +1,7 @@
 package com.jogo_do_pichu.backend.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,5 +36,6 @@ public class User{
     private TypeTheme theme;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Bet> historyBet;
 }

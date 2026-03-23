@@ -1,5 +1,6 @@
 package com.jogo_do_pichu.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -8,10 +9,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Table
 @Entity
 @Getter
 @Setter
-@Table
 @AllArgsConstructor
 @NoArgsConstructor
 public class NumBet {
@@ -22,6 +23,12 @@ public class NumBet {
     private int number;
 
     //Tem o cascade persiste pra que eu consiga salvar aposta sem precisar salvar cada número individualmente
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
+    @JsonBackReference
     private Bet bet;
+
+    public NumBet(int number, Bet bet) {
+        this.number = number;
+        this.bet = bet;
+    }
 }
