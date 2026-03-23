@@ -15,4 +15,13 @@
         (click)="clickButton()"
     >
     </app-button>
+    @if (backed==true) {
+        <app-button
+            type="outline"
+            class="w-100"
+            text="Cancelar"
+            (click)="clickBack()"
+        >
+        </app-button>
+    }
 </div>

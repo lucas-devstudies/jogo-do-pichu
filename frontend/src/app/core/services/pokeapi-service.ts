@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable,map, of } from 'rxjs';
+import { Bet, BetDTO } from '../../shared/models/Bet';
+import { TokenService } from './token-service';
 
 interface Region {
   id:number;
@@ -14,10 +16,12 @@ interface Region {
 export class PokeapiService {
 
   private urlImage = '/assets/cities';
+  private urlBase = 'http://localhost:8080';
   private baseUrl = 'https://pokeapi.co/api/v2/pokemon';
   private imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 
-  constructor(private http: HttpClient) {}
+    constructor(private token:TokenService,private http:HttpClient){}
+
 
   getPokemons(limit = 20, offset = 0) {
     return this.http
@@ -55,5 +59,10 @@ export class PokeapiService {
     ];
 
     return of(region);
+  }
+
+  postBet(bet:BetDTO): Observable<Bet> {
+    const headers = this.token.getAuthHeaders();
+    return this.http.post<Bet>(`${this.urlBase}/bet/save`,bet,{headers});
   }
 }

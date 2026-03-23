@@ -18,9 +18,6 @@ public class BetController {
     @Autowired
     private BetService betService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @PostMapping("/save")
     public ResponseEntity<Bet> save(@RequestBody BetDTO betDTO, Authentication authentication){
 

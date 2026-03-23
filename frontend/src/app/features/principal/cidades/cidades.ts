@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { Button } from "../../../core/components/button/button";
 import { CommonModule } from '@angular/common';
+import { City } from './city/city';
 import { FormsModule } from '@angular/forms';
 import { PokeapiService } from '../../../core/services/pokeapi-service';
-import { City } from "../../../core/components/city/city";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
-import { Router } from '@angular/router';
 import { BackButton } from "../../../shared/components/back-button/back-button";
 import { ModalResults } from "../../../shared/components/modal-results/modal-results";
 

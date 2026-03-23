@@ -38,8 +38,16 @@ public class Bet {
     @JsonManagedReference
     private List<NumBet> listNumber = new ArrayList<>();
 
+    //valor apostado
+    @Column(precision = 10, scale = 2)
+    private BigDecimal balance;
+
+    //valor retornado
     @Column(precision = 10, scale = 2)
     private BigDecimal value;
+
+    //quantidade que vai retornar caso ganhe
+    private int returnBet;
 
     @CreationTimestamp
     private Date createdAt;
