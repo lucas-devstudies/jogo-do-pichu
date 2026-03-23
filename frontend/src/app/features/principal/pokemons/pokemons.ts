@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Output } from '@angular/core';
 import { PokeapiService } from '../../../core/services/pokeapi-service';
 import { Button } from "../../../core/components/button/button";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
@@ -25,18 +25,20 @@ interface Pokemon{
 export class Pokemons {
 
 
-  constructor(private router:Router){}
+  constructor(private router:Router,private cdr: ChangeDetectorRef){}
 
   private pokeAPIService = inject(PokeapiService);
 
-  bet:BetDTO = {
+  bet:Bet = new Bet();
+  betDTO:BetDTO = {
     balance:0,
     listNumber:[],
     typeBet:'POKEMON'
   };
 
-  input_text:string="";
+  conf:boolean = false
 
+  input_text:string="";
   start:number=0;
 
   escolhida: string = 'aa';
@@ -64,15 +66,15 @@ export class Pokemons {
     }
   }
   change(){
-    //apostar
     this.results='confirm';
   }
   next(){
-    this.results='result';
-    this.pokeAPIService.postBet(this.bet).subscribe({
-      next(Bet:Bet) {
-        alert("Deu bom");
-      },error(err) {
+    this.pokeAPIService.postBet(this.betDTO).subscribe({
+      next:(bet)=> {
+        this.bet = bet;
+        this.results='result';
+        this.cdr.detectChanges();        
+      },error:(err)=> {
         alert(err);
       },
     })
@@ -84,18 +86,22 @@ export class Pokemons {
 
   }
   formatedValue(value:number):number{
-    return value*this.factor(this.bet);
+    return value*this.factor(this.betDTO);
   }
   showResult(){
-    this.results='win';
+    if(this.bet.value==0){
+      this.results='lose';
+    }else{
+      this.results='win';
+    }
   }
   closeModal(){
     this.back();
   }
 
-  factor(bet:BetDTO):number{
-    if(bet.typeBet=='POKEMON'){
-      switch(bet.listNumber.length){
+  factor(betDTO:BetDTO):number{
+    if(betDTO.typeBet=='POKEMON'){
+      switch(betDTO.listNumber.length){
         case 1: 
           return 1000;
 
@@ -116,7 +122,7 @@ export class Pokemons {
       }
     } 
     else{
-      switch(bet.listNumber.length){
+      switch(betDTO.listNumber.length){
         case 1:
           return 7;
         
@@ -129,40 +135,45 @@ export class Pokemons {
     }
   }
   togglerPokemon(pokemon: Pokemon) {
-    const config = TypeBet[this.bet.typeBet as keyof typeof TypeBet];
+    const config = TypeBet[this.betDTO.typeBet as keyof typeof TypeBet];
     
     // 1. IMPORTANTE: Busque pelo campo 'number', que é onde você guardou o id do pokemon
-    const index = this.bet.listNumber.findIndex(p => p.number === pokemon.id);
+    const index = this.betDTO.listNumber.findIndex(p => p.number === pokemon.id);
 
     console.log("Index encontrado:", index); // Debug: se der -1, a busca falhou
 
     if (index !== -1) {
         // 2. REMOÇÃO REAL: 
         // O splice modifica o array original. 
-        this.bet.listNumber.splice(index, 1);
+        this.betDTO.listNumber.splice(index, 1);
         
         // 3. SE ESTIVER USANDO ANGULAR 16+:
         // Force a atualização da referência para o Angular "perceber" a mudança
-        this.bet.listNumber = [...this.bet.listNumber];
+        this.betDTO.listNumber = [...this.betDTO.listNumber];
         
     } else {
         // 4. ADIÇÃO:
-        if (this.bet.listNumber.length < config.maxBet) {
+        if (this.betDTO.listNumber.length < config.maxBet) {
             // Crie o objeto exatamente como o DTO espera
             const nb: NumBet = {
                 number: pokemon.id
             };
-            this.bet.listNumber.push(nb);
+            this.betDTO.listNumber.push(nb);
             
             // Force a atualização da referência aqui também
-            this.bet.listNumber = [...this.bet.listNumber];
+            this.betDTO.listNumber = [...this.betDTO.listNumber];
         } else {
             alert(`Limite de ${config.maxBet} atingido!`);
         }
     }
   }
   get isMaxLimitExceeded(): boolean {
-    const config = TypeBet[this.bet.typeBet as keyof typeof TypeBet];
-    return this.bet.listNumber.length >= config.maxBet;
+    const config = TypeBet[this.betDTO.typeBet as keyof typeof TypeBet];
+    return this.betDTO.listNumber.length >= config.maxBet;
+  }
+  closeConfModal(conf:boolean){
+    if(conf==false){
+      this.results='none';
+    }
   }
 }

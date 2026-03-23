@@ -63,5 +63,5 @@
     scale: 1.01;
 }
 .clicked{
-    border: 0.2rem solid var(--color-warning);
+    border: 0.2rem solid #ffb158;
 }

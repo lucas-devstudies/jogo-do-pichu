@@ -11,11 +11,11 @@
     <div class="info d-flex justify-content-between">
         <div class="info_container">
             <h3 class="w-100 text-center">Escolha</h3>
-            <p class="w-100 fw-bold text-center">{{bet.listNumber.length}}/{{ pokemonNumber$ | async }}</p>
+            <p class="w-100 fw-bold text-center">{{betDTO.listNumber.length}}/{{ pokemonNumber$ | async }}</p>
         </div>
         <div class="info_container">
             <h3 class="w-100 text-center">Retorno</h3>
-            <p class="w-100 fw-bold text-center">{{factor(bet)}}x</p>
+            <p class="w-100 fw-bold text-center">{{factor(betDTO)}}x</p>
         </div>
     </div>
 
@@ -52,7 +52,7 @@
         <div class="d-flex justify-content-between mb-2">
             <h3 class="fw-bold d-flex">Custo</h3>
             <div class="return d-flex">
-                <h3 class="w-100">Retorno<span class="fw-bold">R$ {{ formatedValue(bet.balance) }}</span></h3>
+                <h3 class="w-100">Retorno<span class="fw-bold">R$ {{ formatedValue(betDTO.balance) }}</span></h3>
             </div>
         </div>
         
@@ -61,7 +61,7 @@
             class="card_value"
             type_input="number"
             placeholder="20,00"
-            [(value)]="bet.balance"
+            [(value)]="betDTO.balance"
         ></app-custom-input>
     </div>
 
@@ -76,9 +76,10 @@
     <div class="modal-overlay">
         <app-modal-results
             title="Atenção"
-            textBet="Você deseja confirmar a sua aposta no valor de R$ {{bet.balance}} em {{bet.listNumber}}?"
+            textBet="Você deseja confirmar a sua aposta no valor de R$ {{betDTO.balance}} em {{betDTO.listNumber}}?"
             text_button="Confirmar"
             [backed]="true"
+            (closed)="closeConfModal(conf)"
             (selected)="next()"
         ></app-modal-results>
     </div>
@@ -87,8 +88,7 @@
         <app-modal-results
             title="Aposta Realizada!"
             img="assets/icons/check.png"
-            textBet="Código do Sorteio: 000231"
-            text_button="Ver resultado"
+            [textBet]="'Código do Sorteio: ' + bet.id"  text_button="Ver resultado"            text_button="Ver resultado"
             (selected)="showResult()"
         ></app-modal-results>
     </div>
@@ -97,8 +97,8 @@
         <app-modal-results
             title="Parabéns"
             img="assets/icons/pichu.png"
-            textBet="Você apostou R$ 20,00"
-            textReceived="e arrecadou R$ 400,00"
+            [textBet]="'Você apostou R$ ' + bet.balance" 
+            [textReceived]="'e arrecadou R$ ' + bet.value"
             text_button="Confirmar"
             (selected)="closeModal()"
         ></app-modal-results>

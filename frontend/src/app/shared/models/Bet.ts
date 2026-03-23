@@ -8,7 +8,7 @@ export class Bet{
     value!:number;
     returnBet!:number;
     createdAt!:string;
-    retult!:number;
+    result!:number;
 }
 export class NumBet{
     id?:number;
