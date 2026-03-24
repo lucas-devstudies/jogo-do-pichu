@@ -19,3 +19,32 @@
     align-items: center;
     justify-content: center;
 }
+.listBet{
+    margin-top: 1rem;
+    width: 100%;
+    height: auto;
+    padding-left: 0;
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: space-between;
+    scrollbar-width: none;
+}
+.listBet:active {
+    cursor: grabbing;
+}
+
+.listBet::-webkit-scrollbar {
+    display: none;
+}
+app-pokemon-card,app-city{
+    max-width: 10rem;
+    min-width: 10rem;
+}
+app-pokemon .pokemon h3{
+    height: fit-content;
+    border: 1px solid red;
+    color: var(--color-primary);
+}

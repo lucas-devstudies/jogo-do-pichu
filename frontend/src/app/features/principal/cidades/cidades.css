@@ -61,10 +61,6 @@
 .cities::-webkit-scrollbar {
     display: none;
 }
-.clicado{
-  border: 0.2rem solid red;
-}
-
 .return{
   height: auto;
 }

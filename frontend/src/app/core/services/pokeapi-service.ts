@@ -70,11 +70,13 @@ export class PokeapiService {
       })
     );
   }
+  
   findRegion(id:number):Observable<Region>{
     return this.getRegions().pipe(
     map(regions => regions.find(r => r.id === id)!)
   );
   }
+  
   getRegions(): Observable<Region[]> {
     const region: Region[] = [
       {id:1, name: 'Alola', img: `${this.urlImage}/Alola.png` },
@@ -95,4 +97,25 @@ export class PokeapiService {
   getNumberRegions():number{
     return 10;
   }
+
+  findMyBets():Observable<Bet[]>{
+    const headers = this.token.getAuthHeaders();
+    return this.http.get<Bet[]>(`${this.urlBase}/bet/findMyBets`,{headers});
+  }
+
+  getBetImageUrl(typeBet: string, result: number): string {
+    if (typeBet === 'POKEMON') {
+      return `${this.imageUrl}/${result}.png`;
+    }
+    if (typeBet === 'REGION') {
+    const regions = [
+      'Alola', 'Galar', 'Hisui', 'Hoenn', 'Johto', 
+      'Kalos', 'Kanto', 'Paldea', 'Sinnoh', 'Unova'
+    ];
+    const regionName = regions[result - 1] || 'Kanto'; 
+    return `${this.urlImage}/${regionName}.png`;
+  }
+
+  return 'assets/icons/not-found.png'; // Fallback
+}
 }

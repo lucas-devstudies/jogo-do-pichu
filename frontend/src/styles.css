@@ -6,6 +6,7 @@
   --color-warning: #3EFFD8;       /* vermelho */
   --color-disable: #7E7E7E;   /* cor desabilitados */
   --color-white: #fefefe;     /*cor branca */
+  --color-black: #1e1e1e;
   --color-background:  linear-gradient(192deg, #00001E 0.67%, #00003A 94.31%); /*cor para bordas */
 }
 
