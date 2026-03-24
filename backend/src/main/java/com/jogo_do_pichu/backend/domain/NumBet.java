@@ -20,7 +20,7 @@ public class NumBet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int number;
+    private long number;
     private String name;
 
     //Tem o cascade persiste pra que eu consiga salvar aposta sem precisar salvar cada número individualmente
@@ -28,7 +28,7 @@ public class NumBet {
     @JsonBackReference
     private Bet bet;
 
-    public NumBet(int number, Bet bet,String name) {
+    public NumBet(long number, Bet bet,String name) {
         this.number = number;
         this.bet = bet;
         this.name = name;

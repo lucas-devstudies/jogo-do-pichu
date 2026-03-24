@@ -62,6 +62,9 @@ public class BetService {
         return betRepository.save(bet);
     }
 
+    public List<Bet> findMyBets(String email){
+        return betRepository.findByUserEmailWithNumbers(email);
+    }
     private int randomBet(Bet bet) {
         //Para uso normal
         int max_bet = bet.getTypeBet().getSizeBet();

@@ -9,9 +9,14 @@
 }
 img{
     width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+    display: block;
+    overflow: hidden;
 }
 .imgAlt{
     width: 4rem;
+    height: 4rem;
 }
 p{
     opacity: 0.9;

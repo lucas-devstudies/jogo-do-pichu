@@ -39,7 +39,6 @@ export class Cidades {
     name:"",
     img:""
   }
-  conf:boolean = false
   regions$ = this.pokeAPIService.getRegions();
   regionsNumber$ = this.pokeAPIService.getNumberRegions();
   results: 'confirm' | 'win' | 'lose' | 'result'| 'none' | 'drawn' = 'none';
@@ -169,9 +168,7 @@ export class Cidades {
 
     return nomes.length > 0 ? nomes.join(', ') : 'Nenhum selecionado';
   }
-  closeConfModal(conf:boolean){
-    if(conf==false){
-      this.results='none';
-    }
+  closeConfModal(){
+    this.results='none';
   }
 }
