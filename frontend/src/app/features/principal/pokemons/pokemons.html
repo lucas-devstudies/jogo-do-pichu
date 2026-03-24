@@ -11,7 +11,7 @@
     <div class="info d-flex justify-content-between">
         <div class="info_container">
             <h3 class="w-100 text-center">Escolha</h3>
-            <p class="w-100 fw-bold text-center">{{betDTO.listNumber.length}}/{{ pokemonNumber$ | async }}</p>
+            <p class="w-100 fw-bold text-center">{{betDTO.listNumber.length}}/{{ pokemonNumber$}}</p>
         </div>
         <div class="info_container">
             <h3 class="w-100 text-center">Retorno</h3>
@@ -76,23 +76,37 @@
     <div class="modal-overlay">
         <app-modal-results
             title="Atenção"
-            textBet="Você deseja confirmar a sua aposta no valor de R$ {{betDTO.balance}} em {{betDTO.listNumber}}?"
+            textBet="Você deseja confirmar a sua aposta no valor de R$ {{betDTO.balance}} em {{formatedList}}?"
             text_button="Confirmar"
             [backed]="true"
             (closed)="closeConfModal(conf)"
             (selected)="next()"
-        ></app-modal-results>
-    </div>
-}@if (results == "result") {
+            ></app-modal-results>
+        </div>
+    }
+    @if (results == 'drawn') {
+        <div class="modal-overlay">
+            <app-modal-results
+                title="Aposta Realizada!"
+                img="assets/icons/check.png"
+                textBet="Código do sorteio: {{bet.id}}"
+                text_button="Ver Resultado"
+                (selected)="showResult()"
+            ></app-modal-results>
+        </div>
+    }
+@if (results == "result") {
     <div class="modal-overlay">
         <app-modal-results
-            title="Aposta Realizada!"
-            img="assets/icons/check.png"
-            [textBet]="'Código do Sorteio: ' + bet.id"  text_button="Ver resultado"            text_button="Ver resultado"
-            (selected)="showResult()"
+            title="Pokémon Sorteado!"
+            img={{sortPokemon.img}}
+            textBet={{sortPokemon.name}}
+            text_button="Confirmar"
+            (selected)="openResult()"
         ></app-modal-results>
     </div>
-}@if (results == "win") {
+}
+@if (results == "win") {
     <div class="modal-overlay">
         <app-modal-results
             title="Parabéns"

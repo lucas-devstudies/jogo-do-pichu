@@ -13,6 +13,7 @@ export class Bet{
 export class NumBet{
     id?:number;
     number!:number;
+    name!:string;
 }
 export class BetDTO{
     typeBet!:TypeBetName;

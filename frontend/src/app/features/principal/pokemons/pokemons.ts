@@ -24,8 +24,7 @@ interface Pokemon{
 })
 export class Pokemons {
 
-
-  constructor(private router:Router,private cdr: ChangeDetectorRef){}
+  constructor(private cdr: ChangeDetectorRef){}
 
   private pokeAPIService = inject(PokeapiService);
 
@@ -37,12 +36,17 @@ export class Pokemons {
   };
 
   conf:boolean = false
+  sortPokemon: Pokemon = {
+    id : 0,
+    name : "",
+    img : ""
+  };
 
   input_text:string="";
   start:number=0;
 
   escolhida: string = 'aa';
-  results: 'confirm' | 'win' | 'lose' | 'result'| 'none' = 'none';
+  results: 'confirm' | 'win' | 'lose' | 'result'| 'none' | 'drawn' = 'none';
 
   pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
   pokemonNumber$ = this.pokeAPIService.getNumberPokemon();
@@ -72,10 +76,19 @@ export class Pokemons {
     this.pokeAPIService.postBet(this.betDTO).subscribe({
       next:(bet)=> {
         this.bet = bet;
-        this.results='result';
-        this.cdr.detectChanges();        
+        console.log(bet);
+        this.pokeAPIService.findPokemon(this.bet.result).subscribe({
+          next:(pokemon)=> {
+            this.sortPokemon = pokemon;
+            this.results='drawn';
+            this.cdr.detectChanges();
+          },error:(err)=>{
+            alert("Resultado não encontrado");
+          }
+        })        
       },error:(err)=> {
         alert(err);
+        console.log("deu aqui aqui",err);
       },
     })
   }
@@ -88,12 +101,15 @@ export class Pokemons {
   formatedValue(value:number):number{
     return value*this.factor(this.betDTO);
   }
-  showResult(){
+  openResult(){
     if(this.bet.value==0){
       this.results='lose';
     }else{
       this.results='win';
     }
+  }
+  showResult(){
+    this.results='result';
   }
   closeModal(){
     this.back();
@@ -135,32 +151,22 @@ export class Pokemons {
     }
   }
   togglerPokemon(pokemon: Pokemon) {
-    const config = TypeBet[this.betDTO.typeBet as keyof typeof TypeBet];
-    
-    // 1. IMPORTANTE: Busque pelo campo 'number', que é onde você guardou o id do pokemon
+    const config = TypeBet[this.betDTO.typeBet as keyof typeof TypeBet];    
     const index = this.betDTO.listNumber.findIndex(p => p.number === pokemon.id);
 
-    console.log("Index encontrado:", index); // Debug: se der -1, a busca falhou
-
     if (index !== -1) {
-        // 2. REMOÇÃO REAL: 
-        // O splice modifica o array original. 
         this.betDTO.listNumber.splice(index, 1);
         
-        // 3. SE ESTIVER USANDO ANGULAR 16+:
-        // Force a atualização da referência para o Angular "perceber" a mudança
-        this.betDTO.listNumber = [...this.betDTO.listNumber];
+       this.betDTO.listNumber = [...this.betDTO.listNumber];
         
     } else {
-        // 4. ADIÇÃO:
         if (this.betDTO.listNumber.length < config.maxBet) {
-            // Crie o objeto exatamente como o DTO espera
             const nb: NumBet = {
-                number: pokemon.id
+                number: pokemon.id,
+                name:pokemon.name
             };
             this.betDTO.listNumber.push(nb);
             
-            // Force a atualização da referência aqui também
             this.betDTO.listNumber = [...this.betDTO.listNumber];
         } else {
             alert(`Limite de ${config.maxBet} atingido!`);
@@ -170,6 +176,13 @@ export class Pokemons {
   get isMaxLimitExceeded(): boolean {
     const config = TypeBet[this.betDTO.typeBet as keyof typeof TypeBet];
     return this.betDTO.listNumber.length >= config.maxBet;
+  }
+  get formatedList(): string {
+    const nomes = this.betDTO.listNumber
+      .map(p => p.name) 
+      .filter(n => !!n); 
+
+    return nomes.length > 0 ? nomes.join(', ') : 'Nenhum selecionado';
   }
   closeConfModal(conf:boolean){
     if(conf==false){

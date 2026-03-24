@@ -47,12 +47,12 @@ public class BetService {
 
         if (dto.listNumber() != null) {
             List<NumBet> numBets = dto.listNumber().stream()
-                    .map(n -> new NumBet(n.getNumber(), bet))
+                    .map(n -> new NumBet(n.getNumber(), bet,n.getName()))
                     .toList();
 
             bet.setListNumber(numBets);
         }
-        if(bet.getListNumber().contains(result)){
+        if(win(bet,result)){
             bet.setValue(returnBet(bet));
             user.addBalance(bet.getValue());
         }else{
@@ -63,8 +63,12 @@ public class BetService {
     }
 
     private int randomBet(Bet bet) {
-        int max_bet = bet.getTypeBet().getMaxBet();
-        return ThreadLocalRandom.current().nextInt(1, max_bet);
+        //Para uso normal
+        int max_bet = bet.getTypeBet().getSizeBet();
+
+        //Para teste com bumbassaur
+        //int max_bet = 2;
+        return ThreadLocalRandom.current().nextInt(1, max_bet+1);
     }
 
     private void validateBet(Bet bet) {
@@ -92,6 +96,7 @@ public class BetService {
                     NumBet nb = new NumBet();
                     nb.setNumber(n.getNumber());
                     nb.setBet(bet);
+                    nb.setName(n.getName());
                     return nb;
                 })
                 .toList();
@@ -129,5 +134,9 @@ public class BetService {
 
     private BigDecimal returnBet(Bet bet){
         return BigDecimal.valueOf(bet.getReturnBet()).multiply(bet.getBalance());
+    }
+
+    private boolean win(Bet bet, int result){
+        return bet.getListNumber().stream().anyMatch(n -> n.getNumber() == result);
     }
 }

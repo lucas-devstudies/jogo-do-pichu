@@ -3,12 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable,map, of } from 'rxjs';
 import { Bet, BetDTO } from '../../shared/models/Bet';
 import { TokenService } from './token-service';
+import { Pokemons } from '../../features/principal/pokemons/pokemons';
 
 interface Region {
   id:number;
   name: string;
   img: string;
 }
+
+interface Pokemon{
+  id:number;
+  name:string;
+  img:string;
+}
+
 
 @Injectable({
   providedIn: 'root',
@@ -40,9 +48,8 @@ export class PokeapiService {
       );
   }
 
-  getNumberPokemon(): Observable<number> {
-    return this.http.get<{ count: number }>(this.baseUrl)
-      .pipe(map(res => res.count));
+  getNumberPokemon(): number{
+    return 1025;
   }
   getRegioes(): Observable<Region[]> {
     const region: Region[] = [
@@ -64,5 +71,20 @@ export class PokeapiService {
   postBet(bet:BetDTO): Observable<Bet> {
     const headers = this.token.getAuthHeaders();
     return this.http.post<Bet>(`${this.urlBase}/bet/save`,bet,{headers});
+  }
+
+  findPokemon(id:number):Observable<Pokemon>{
+    return this.http.get<Pokemon>(`${this.baseUrl}/${id}`).pipe(
+      map(res => {
+        // Aqui a gente "molda" o objeto que o componente vai receber
+        const pokemon: Pokemon = {
+          id: res.id,
+          name: res.name,
+          // Pegando a imagem oficial direto do nó complexo da PokeAPI
+          img: `${this.imageUrl}/${id}.png`
+        };
+        return pokemon;
+      })
+    );
   }
 }
