@@ -1,4 +1,4 @@
-<div class="city">
+<div class="city" [class.clicked]="selected" (click)="clicked()">
     <img [src]=img alt="">
-    <p class="fw-bold">{{city}}</p>
-</div>
+    <p class="fw-bold">{{name}}</p>
+</div> 

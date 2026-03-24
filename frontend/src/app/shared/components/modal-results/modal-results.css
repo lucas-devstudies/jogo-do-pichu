@@ -8,6 +8,9 @@
     max-width: 20rem;
 }
 img{
+    width: 10rem;
+}
+.imgAlt{
     width: 4rem;
 }
 p{

@@ -10,19 +10,22 @@
     <div class="info d-flex justify-content-between">
         <div class="info_container">
             <h3 class="w-100 text-center">Escolha</h3>
-            <p class="w-100 fw-bold text-center">0/10</p>
+            <p class="w-100 fw-bold text-center">{{betDTO.listNumber.length}}/{{ regionsNumber$}}</p>
         </div>
         <div class="info_container">
             <h3 class="w-100 text-center">Retorno</h3>
-            <p class="w-100 fw-bold text-center">7x</p>
+            <p class="w-100 fw-bold text-center">{{factor(betDTO)}}x</p>
         </div>
     </div>
 
     <div #scrollContainer class="cities mb-3 p-1">
-        @for (city of regions$ | async; track city.id) {
+        @for (region of regions$ | async; track region.id) {
             <app-city
-                [img]=city.img
-                [city]=city.name
+                [id] = "region.id"
+                [img]=region.img
+                [name]=region.name
+                [isLimitExceeded]="isMaxLimitExceeded"
+                (returnId)="togglerRegion(region)"
             >
             </app-city>
         }
@@ -31,48 +34,65 @@
         <div class="d-flex justify-content-between mb-2">
             <h3 class="fw-bold d-flex">Custo</h3>
             <div class="return d-flex">
-                <h3 class="w-100">Retorno<span class="fw-bold">R$ {{formatedValue(value)}}</span></h3>
+                <h3 class="w-100">Retorno<span class="fw-bold">R$ {{ formatedValue(betDTO.balance) }}</span></h3>
             </div>
         </div>
         <app-custom-input
             type="card"
-            ngClass="card_value"
+            class="card_value"
             type_input="number"
             placeholder="20,00"
-            [(value)]="value"
+            [(value)]="betDTO.balance"
         ></app-custom-input>
     </div>
     <app-button
-        text="Seguinte"
+        class="w-100"
+        text="Confirmar"
         (click)="change()"
     ></app-button>
 </form>
-@if (results=="confirm") {
+
+@if (results == "confirm") {
     <div class="modal-overlay">
         <app-modal-results
             title="Atenção"
-            textBet="Você deseja confirmar a sua aposta no valor de R$ 20,00 em Bumbassaur?"
+            textBet="Você deseja confirmar a sua aposta no valor de R$ {{betDTO.balance}} em {{formatedList}}?"
             text_button="Confirmar"
+            [backed]="true"
+            (closed)="closeConfModal(conf)"
             (selected)="next()"
-        ></app-modal-results>
-    </div>
-}@if (results == "result") {
+            ></app-modal-results>
+        </div>
+}
+    @if (results == 'drawn') {
+        <div class="modal-overlay">
+            <app-modal-results
+                title="Aposta Realizada!"
+                img="assets/icons/check.png"
+                textBet="Código do sorteio: {{bet.id}}"
+                text_button="Ver Resultado"
+                (selected)="showResult()"
+            ></app-modal-results>
+        </div>
+    }
+@if (results == "result") {
     <div class="modal-overlay">
         <app-modal-results
-            title="Aposta Realizada!"
-            img="assets/icons/check.png"
-            textBet="Código do Sorteio: 000231"
-            text_button="Ver resultado"
-            (selected)="showResult()"
+            title="Região Sorteada!"
+            img={{sortRegion.img}}
+            textBet={{sortRegion.name}}
+            text_button="Confirmar"
+            (selected)="openResult()"
         ></app-modal-results>
     </div>
-}@if (results == "win") {
+}
+@if (results == "win") {
     <div class="modal-overlay">
         <app-modal-results
             title="Parabéns"
             img="assets/icons/pichu.png"
-            textBet="Você apostou R$ 20,00"
-            textReceived="e arrecadou R$ 400,00"
+            [textBet]="'Você apostou R$ ' + bet.balance" 
+            [textReceived]="'e arrecadou R$ ' + bet.value"
             text_button="Confirmar"
             (selected)="closeModal()"
         ></app-modal-results>
