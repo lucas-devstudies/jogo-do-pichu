@@ -52,7 +52,6 @@
   overflow-y: hidden;
   justify-content: space-between;
   scrollbar-width: none;
-
 }
 .cities:active {
     cursor: grabbing;

@@ -22,7 +22,7 @@ interface Region{
   templateUrl: './cidades.html',
   styleUrl: './cidades.css',
 })
-export class Cidades {
+export class Cidades implements AfterViewInit{
 
   constructor(private cdr: ChangeDetectorRef){}
 
@@ -46,9 +46,22 @@ export class Cidades {
   @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
   @Output() voltar = new EventEmitter<string>();
 
-  configurarScroll(){
-    this.scrollContainers.forEach((containerRef: ElementRef) => {
+  ngAfterViewInit() {
+    this.scrollContainers.changes.subscribe(() => {
+      this.configurarScroll();
+    });
+  
+    if (this.scrollContainers.length > 0) {
+      this.configurarScroll();
+    }
+  }
+  configurarScroll() {
+  this.scrollContainers.forEach((containerRef: ElementRef) => {
     const container = containerRef.nativeElement;
+
+    // Trava para não duplicar eventos em re-renderizações
+    if (container.getAttribute('data-scroll-active')) return;
+    container.setAttribute('data-scroll-active', 'true');
 
     let isDown = false;
     let startX = 0;
@@ -59,7 +72,9 @@ export class Cidades {
       container.style.cursor = 'grabbing';
       startX = e.pageX - container.offsetLeft;
       scrollLeft = container.scrollLeft;
-      e.preventDefault();
+      
+      // Impede o navegador de tentar "arrastar" a imagem ou selecionar texto
+      e.preventDefault(); 
     });
 
     container.addEventListener('mouseleave', () => {
@@ -74,10 +89,15 @@ export class Cidades {
 
     container.addEventListener('mousemove', (e: MouseEvent) => {
       if (!isDown) return;
+      
+      e.preventDefault(); 
+      
       const x = e.pageX - container.offsetLeft;
-      const walk = x - startX;
+      const walk = x - startX; 
       container.scrollLeft = scrollLeft - walk;
     });
+
+    container.addEventListener('dragstart', (e: Event) => e.preventDefault());
   });
   }
   next(){

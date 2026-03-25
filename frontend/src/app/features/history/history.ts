@@ -76,5 +76,5 @@ export class History implements AfterViewInit{
 
     container.addEventListener('dragstart', (e: Event) => e.preventDefault());
   });
-}
+  }
 }

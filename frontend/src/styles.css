@@ -2,12 +2,12 @@
 :root {
   --color-primary: #6A50FF;   /* azul */
   --color-details: #1C1C4C;   /* azul escuro para contraste */
-  --color-red: #ff3e3e;       /* vermelho */
+  --color-red: #1C1C4C;       /* vermelho */
   --color-warning: #3EFFD8;       /* vermelho */
   --color-disable: #7E7E7E;   /* cor desabilitados */
   --color-white: #fefefe;     /*cor branca */
   --color-black: #1e1e1e;
-  --color-background:  linear-gradient(192deg, #00001E 0.67%, #00003A 94.31%); /*cor para bordas */
+  --color-background:  #00003A  /*cor para bordas */
 }
 
 /* configuração de cores inicial */
@@ -67,7 +67,9 @@ label{
     align-items: center;
     border-radius: 0;
 }
-
+.container-fluid{
+  background-color: var(--color-background);
+}
 @media(max-width:400px){
   .menu{
     width: 90%;

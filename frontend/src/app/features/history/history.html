@@ -25,7 +25,7 @@
                                         <p>Tipo de Aposta: <span class="fw-bold">{{ bet.typeBet }}</span></p>
                                         <p>Valor Apostado: <span class="fw-bold">{{ bet.balance | currency:'BRL' }}</span></p>                                        
                                         <hr>
-                                        <div #scrollContainer class="listBet">
+                                        <div #scrollContainer class="listBet gap-2">
                                             @if(bet.typeBet=="REGION"){
                                                 @for (region of bet.listNumber; track $index) {
                                                     <app-city
