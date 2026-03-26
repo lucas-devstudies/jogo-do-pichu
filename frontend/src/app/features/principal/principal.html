@@ -13,10 +13,12 @@
         }
         @else if (atual == 'cidades') {
             <app-cidades
+                [userDTO]="(me$ | async)!"
                 (voltar)="back()">    
             </app-cidades>
         }@else if (atual == 'pokemons') {
             <app-pokemons
+                [userDTO]="(me$ | async)!"
                 (voltar)="back()">    
             </app-pokemons>
         }

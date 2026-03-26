@@ -15,6 +15,7 @@
     max-width: 30rem;
     flex-direction: column;
     z-index: 2;
+    margin: 0;
     overflow: hidden;
     align-items: center;
     justify-content: center;

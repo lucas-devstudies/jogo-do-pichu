@@ -2,23 +2,26 @@
 :root {
   --color-primary: #6A50FF;   /* azul */
   --color-details: #1C1C4C;   /* azul escuro para contraste */
-  --color-red: #1C1C4C;       /* vermelho */
-  --color-warning: #3EFFD8;       /* vermelho */
+  --color-red: red;           /* vermelho */
+  --color-warning: #3EFFD8;   /* vermelho */
   --color-disable: #7E7E7E;   /* cor desabilitados */
-  --color-white: #fefefe;     /*cor branca */
-  --color-black: #1e1e1e;
-  --color-background:  #00003A  /*cor para bordas */
+  --color-white: #fefefe;     /* cor branca */
+  --color-black: #1e1e1e;     /* cor dos textos */
+  --color-background:  #00003A;  /*cor para bordas */
 }
-
+*{
+  user-select: none;
+  -moz-user-select: none;
+}
 /* configuração de cores inicial */
-h2,h3,p,label,button{
+h2,h3,p,label,a,button{
   font-family: "Quicksand", sans-serif;
   color: var(--color-white);
 }
 h2{
   font-size: 1.4rem;
 }
-h3,span{
+h3,a,span{
   font-size: 1.2rem;
 }
 p{
@@ -27,7 +30,6 @@ p{
 label{
   font-weight: 1.2rem;
 }
-
 /* configuração de modal padrão */
 .option{
   width: 90%;
@@ -35,6 +37,7 @@ label{
   background-color: var(--color-details);
   padding: 1rem;
   border-radius: 1rem;
+  margin: 2rem 0 5rem 0;
 }
 .menu{
   display: flex;

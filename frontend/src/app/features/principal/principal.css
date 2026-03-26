@@ -27,7 +27,6 @@ app-opcoes,app-cidades,app-pokemons{
     display: flex;
     width: 100%;
     flex-direction: column;
-    z-index: 2;
     overflow: hidden;
     align-items: center;
     justify-content: center;

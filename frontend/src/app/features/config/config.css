@@ -15,6 +15,7 @@
 .option{
     width: 100%;
     border-radius: 0;
+    margin: 0;
     background-color: var(--color-details);
     padding: 1rem;
     cursor: pointer;
@@ -57,6 +58,8 @@ app-sobre{
         align-items: center;
         justify-content: center;
     }
-    app-sobre{
-    }
+}
+a{
+    color: var(--color-white);
+    text-decoration-line: none;
 }

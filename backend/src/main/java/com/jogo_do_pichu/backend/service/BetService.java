@@ -9,6 +9,9 @@ import com.jogo_do_pichu.backend.repositories.BetRepository;
 import com.jogo_do_pichu.backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -62,8 +65,9 @@ public class BetService {
         return betRepository.save(bet);
     }
 
-    public List<Bet> findMyBets(String email){
-        return betRepository.findByUserEmailWithNumbers(email);
+    public Page<Bet> findMyBets(String email, int page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        return betRepository.findByUserEmailWithNumbers(email, pageable);
     }
     private int randomBet(Bet bet) {
         //Para uso normal

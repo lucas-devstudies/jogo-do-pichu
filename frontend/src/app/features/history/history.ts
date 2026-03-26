@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, QueryList, signal, ViewChildren } from '@angular/core';
 import { Bet } from '../../shared/models/Bet';
 import { Menu } from "../../core/components/menu/menu";
 import { PokeapiService } from '../../core/services/pokeapi-service';
@@ -6,6 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { City } from "../principal/cidades/city/city";
 import { PokemonCard } from "../principal/pokemons/pokemon-card/pokemon-card";
+import { Button } from "../../core/components/button/button";
 
 @Component({
   selector: 'app-history',
@@ -15,14 +16,58 @@ import { PokemonCard } from "../principal/pokemons/pokemon-card/pokemon-card";
 })
 export class History implements AfterViewInit{
 
+  // Criamos signals para o estado da tela
+  bets = signal<Bet[]>([]);
+  currentPage = signal<number>(0);
+  isLastPage = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
+  
   private pokeAPIService = inject(PokeapiService);
-  bets$ = this.pokeAPIService.findMyBets();
 
   getImage(bet: Bet, number:number): string {
     return this.pokeAPIService.getBetImageUrl(bet.typeBet,number);
   }
-  @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
 
+  async ngOnInit() {
+    await this.loadBets(0);
+  }
+
+  async loadBets(page: number) {
+    if (this.isLoading()) return; // Trava para não clicar mil vezes
+    
+    this.isLoading.set(true);
+    try {
+      const res = await this.pokeAPIService.findMyBets(page);
+      
+      // Atualizamos os signals
+      this.bets.set(res.content);
+      this.currentPage.set(res.number);
+      this.isLastPage.set(res.last);
+      
+      // Se precisar resetar o scroll, chama aqui
+      setTimeout(() => this.configurarScroll(), 50);
+    } catch (error) {
+      console.error('Erro ao buscar apostas:', error);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async nextPage() {
+    if (!this.isLastPage()) {
+      await this.loadBets(this.currentPage() + 1);
+    }
+  }
+
+  async prevPage() {
+    if (this.currentPage() > 0) {
+      await this.loadBets(this.currentPage() - 1);
+    }
+  }
+
+
+  //configuração de Scrool
+  @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef>;
   ngAfterViewInit() {
     this.scrollContainers.changes.subscribe(() => {
       this.configurarScroll();

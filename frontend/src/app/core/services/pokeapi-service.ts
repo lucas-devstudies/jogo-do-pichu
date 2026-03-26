@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable,map, of } from 'rxjs';
+import { Observable,lastValueFrom,map, of } from 'rxjs';
 import { Bet, BetDTO } from '../../shared/models/Bet';
 import { TokenService } from './token-service';
 import { Pokemons } from '../../features/principal/pokemons/pokemons';
+import { PageResponse } from '../utils/pageResponse';
 
 interface Region {
   id:number;
@@ -16,7 +17,6 @@ interface Pokemon{
   name:string;
   img:string;
 }
-
 
 @Injectable({
   providedIn: 'root',
@@ -56,15 +56,15 @@ export class PokeapiService {
     return this.http.post<Bet>(`${this.urlBase}/bet/save`,bet,{headers});
   }
 
-  findPokemon(id:number):Observable<Pokemon>{
-    return this.http.get<Pokemon>(`${this.baseUrl}/${id}`).pipe(
+  findPokemon(input:number | string):Observable<Pokemon>{
+    return this.http.get<Pokemon>(`${this.baseUrl}/${input}`).pipe(
       map(res => {
         // Aqui a gente "molda" o objeto que o componente vai receber
         const pokemon: Pokemon = {
           id: res.id,
           name: res.name,
           // Pegando a imagem oficial direto do nó complexo da PokeAPI
-          img: `${this.imageUrl}/${id}.png`
+          img: `${this.imageUrl}/${input}.png`
         };
         return pokemon;
       })
@@ -98,9 +98,11 @@ export class PokeapiService {
     return 10;
   }
 
-  findMyBets():Observable<Bet[]>{
-    const headers = this.token.getAuthHeaders();
-    return this.http.get<Bet[]>(`${this.urlBase}/bet/findMyBets`,{headers});
+  async findMyBets(page: number): Promise<PageResponse<Bet>> {
+  const headers = this.token.getAuthHeaders();
+  return await lastValueFrom(
+    this.http.get<PageResponse<Bet>>(`${this.urlBase}/bet/findMyBets?page=${page}`, { headers })
+  );
   }
 
   getBetImageUrl(typeBet: string, result: number): string {

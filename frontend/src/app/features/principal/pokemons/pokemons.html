@@ -44,8 +44,21 @@
     </div>
 
     <div class="gap-2 d-flex justify-content-between">
-        <button type="button" class="search-button w-100" (click)="backPokemons()">Anterior</button>
-        <button type="button" class="search-button w-100" (click)="nextPokemons()">Próximo</button>
+        <button 
+            type="button" 
+            class="navPoke"
+            (click)="backPokemons()" 
+            [disabled]="start === 0">
+                Anterior
+        </button>
+
+        <button 
+            type="button" 
+            class="navPoke"
+            (click)="nextPokemons()" 
+            [disabled]="start >= 1008">
+                Próximo
+        </button>
     </div>
 
     <div class="payment">
@@ -63,6 +76,9 @@
             placeholder="20,00"
             [(value)]="betDTO.balance"
         ></app-custom-input>
+
+        <p class="fw-bold text-center mt-2">( Saldo: R$ {{userDTO.balance}} )</p>
+
     </div>
 
     <app-button

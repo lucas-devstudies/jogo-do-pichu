@@ -9,6 +9,7 @@ import { BackButton } from "../../../shared/components/back-button/back-button";
 import { ModalResults } from "../../../shared/components/modal-results/modal-results";
 import { Bet, BetDTO, NumBet } from '../../../shared/models/Bet';
 import { TypeBet } from '../../../shared/models/TypeBet';
+import { UserDTO } from '../../../shared/models/UserDTO';
 
 interface Region{
   id:number;
@@ -23,6 +24,9 @@ interface Region{
   styleUrl: './cidades.css',
 })
 export class Cidades implements AfterViewInit{
+
+  @Input()
+  userDTO!:UserDTO;
 
   constructor(private cdr: ChangeDetectorRef){}
 

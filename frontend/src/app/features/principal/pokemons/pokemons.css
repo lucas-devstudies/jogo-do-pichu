@@ -86,7 +86,18 @@
 .clicado{
   border: 0.2rem solid red;
 }
-
+.navPoke{
+    font-weight: bold;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: none;
+    background-color: var(--color-primary);
+    
+}
+.navPoke:disabled{
+    background-color: #ffffff96;
+}
 .return{
   height: auto;
 }

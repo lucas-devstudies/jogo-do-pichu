@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { PokeapiService } from '../../../core/services/pokeapi-service';
 import { Button } from "../../../core/components/button/button";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
@@ -9,6 +9,8 @@ import { BackButton } from "../../../shared/components/back-button/back-button";
 import { Router } from '@angular/router';
 import { Bet, BetDTO, NumBet } from '../../../shared/models/Bet';
 import { TypeBet } from '../../../shared/models/TypeBet';
+import { catchError, map } from 'rxjs';
+import { UserDTO } from '../../../shared/models/UserDTO';
 
 interface Pokemon{
   id:number;
@@ -42,6 +44,9 @@ export class Pokemons {
     img : ""
   };
 
+  @Input()
+  userDTO!:UserDTO;
+
   input_text:string="";
   start:number=0;
 
@@ -53,6 +58,7 @@ export class Pokemons {
 
   @Output() voltar = new EventEmitter<string>();
 
+  
   nextPokemons(){
     if(this.start<=1001){
       this.start+=24;
@@ -71,6 +77,23 @@ export class Pokemons {
   }
   change(){
     this.results='confirm';
+  }
+  search() {
+    const term = this.input_text.trim().toLowerCase();
+
+    if (term === '') {
+      this.start = 0; 
+      this.pokemons$ = this.pokeAPIService.getPokemons(24, this.start);
+      return;
+    }
+
+    this.pokemons$ = this.pokeAPIService.findPokemon(term).pipe(
+      map(pokemon => [pokemon]), 
+      catchError(err => {
+        alert("Pokémon não encontrado!");
+        return this.pokeAPIService.getPokemons(24, this.start);
+      })
+    );
   }
   next(){
     this.pokeAPIService.postBet(this.betDTO).subscribe({
@@ -94,9 +117,6 @@ export class Pokemons {
   }
   back(){
     this.voltar.emit("voltar");
-  }
-  search(){
-
   }
   formatedValue(value:number):number{
     return value*this.factor(this.betDTO);
