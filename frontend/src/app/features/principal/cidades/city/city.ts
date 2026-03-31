@@ -19,6 +19,7 @@ export class City {
   @Input() isLimitExceeded: boolean = false; // O pai avisa se o limite estourou
   
   @Output() returnId = new EventEmitter<number>(); 
+  @Output() showLimitMessage = new EventEmitter<boolean>(); 
 
   selected: boolean = false; // Estado interno
 
@@ -31,7 +32,7 @@ export class City {
     else {
       // Se NÃO está selecionado, eu verifico o limite do pai
       if (this.isLimitExceeded) {
-        alert("Você atingiu o limite de seleções!");
+        this.showLimitMessage.emit(true);
         // NÃO mudo o this.selected para true, impedindo a cor de mudar
         return; 
       }

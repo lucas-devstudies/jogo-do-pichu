@@ -79,6 +79,9 @@ public class BetService {
     }
 
     private void validateBet(Bet bet) {
+        if (bet.getBalance().compareTo(BigDecimal.valueOf(0)) < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O valor apostado deve ser ao menos 1 real");
+        }
         if (bet.getListNumber().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aposta vazia");
         }

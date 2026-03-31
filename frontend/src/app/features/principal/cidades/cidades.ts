@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Button } from "../../../core/components/button/button";
 import { CommonModule } from '@angular/common';
 import { City } from './city/city';
@@ -10,6 +10,8 @@ import { ModalResults } from "../../../shared/components/modal-results/modal-res
 import { Bet, BetDTO, NumBet } from '../../../shared/models/Bet';
 import { TypeBet } from '../../../shared/models/TypeBet';
 import { UserDTO } from '../../../shared/models/UserDTO';
+
+declare var bootstrap: any;
 
 interface Region{
   id:number;
@@ -31,6 +33,8 @@ export class Cidades implements AfterViewInit{
   constructor(private cdr: ChangeDetectorRef){}
 
   private pokeAPIService = inject(PokeapiService);
+
+  messageToast:string = "";
 
   bet:Bet = new Bet();
   betDTO:BetDTO = {
@@ -115,12 +119,11 @@ export class Cidades implements AfterViewInit{
             this.results = 'drawn';
             this.cdr.detectChanges();
           },error:(err)=>{
-            alert("Resultado não encontrado");
+            this.showToast("Resultado não encontrado");
           }
         })
       },error:(err)=> {
-        alert(err);
-        console.log("deu aqui aqui",err);
+        this.showToast(err.error.message);
       },
     })
   }
@@ -158,6 +161,9 @@ export class Cidades implements AfterViewInit{
         return 7;
     }
   }
+  showLimit(){
+    this.showToast("Você atingiu o limite de seleções!");
+  }
   togglerRegion(region: Region) {
     const config = TypeBet[this.betDTO.typeBet as keyof typeof TypeBet];    
     const index = this.betDTO.listNumber.findIndex(r => r.number === region.id);
@@ -177,7 +183,7 @@ export class Cidades implements AfterViewInit{
             
             this.betDTO.listNumber = [...this.betDTO.listNumber];
         } else {
-            alert(`Limite de ${config.maxBet} atingido!`);
+            this.showToast(`Limite de ${config.maxBet} atingido!`);
         }
     }
   }
@@ -194,5 +200,15 @@ export class Cidades implements AfterViewInit{
   }
   closeConfModal(){
     this.results='none';
+  }
+  @ViewChild('liveToast', { static: true }) toastElement!: ElementRef;
+
+  showToast(text: string) {
+    this.messageToast = text;
+    
+    this.cdr.detectChanges();
+
+    const toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
+    toastInstance.show();
   }
 }

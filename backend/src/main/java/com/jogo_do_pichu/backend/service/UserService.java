@@ -27,12 +27,25 @@ public class UserService {
     private TokenService tokenService;
 
     public User save(RegisterRequestDTO body){
-        Optional<User> userTest = this.userRepository.findByEmail(body.email());
 
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+        if(body.password() == null || body.password().isEmpty() ||body.password().length()<6){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"A senha deve possuir pelo menos 6 caracteres");
+        }
+        if (body.name() == null || body.name().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O usuário deve possuir um nome");
+        }
+        if (body.email() == null || body.email().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O usuário deve possuir um email");
+        }
+        if(!body.email().matches(emailRegex)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O formato do e-mail é inválido");
+        }
+        Optional<User> userTest = this.userRepository.findByEmail(body.email());
         if (userTest.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Usuário já cadastrado");
         }
-
         User user = new User();
         user.setName(body.name());
         user.setBalance(BigDecimal.valueOf(1000.00));

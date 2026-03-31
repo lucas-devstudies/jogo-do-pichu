@@ -5,12 +5,20 @@
     flex-direction: column;
     gap: 2rem;
     position: fixed;
+    z-index: 10;
 }
 .menu{
     max-height: 20rem;
 }
+img{
+    width: 2rem;
+    height: 2rem;
+    padding: 0.2rem;
+}
 img:hover{
+    border-radius: 0.5rem;
     transform: scale(1.2);
+    background-color: #3f2ba193;
 }
 
 @media (max-width:700px){

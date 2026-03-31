@@ -3,29 +3,29 @@
     <div class="menu d-flex flex-center justify-content-around align-items-center">
         <!-- principal -->
         @if (select=='home') {
-            <img src="assets/icons/home-white.svg" width="28px" height="28px">
+            <img src="assets/icons/home-white.svg">
         }@else {
-            <img src="assets/icons/home-primary.svg" width="28px" height="28px" (click)="toHome()">
+            <img src="assets/icons/home-primary.svg" (click)="toHome()">
         }
         <!-- cartão -->
         @if (select=='account') {
-            <img src="assets/icons/card-white.svg" width="28px" height="28px">
+            <img src="assets/icons/card-white.svg"> 
         }@else {
-            <img src="assets/icons/card-primary.svg" width="28px" height="28px" (click)="toAccount()">
+            <img src="assets/icons/card-primary.svg" (click)="toAccount()">
         }
 
         <!-- histórico -->
         @if (select=='history') {
-            <img src="assets/icons/history-white.svg" width="28px" height="28px">
+            <img src="assets/icons/history-white.svg">
         }@else {
-            <img src="assets/icons/history-primary.svg" width="28px" height="28px" (click)="toHistory()">
+            <img src="assets/icons/history-primary.svg" (click)="toHistory()">
         }
         
         <!-- opções -->
         @if (select=='gear') {
-            <img src="assets/icons/gear-white.svg" width="28px" height="28px">
+            <img src="assets/icons/gear-white.svg">
         }@else {
-            <img src="assets/icons/gear-primary.svg" width="28px" height="28px" (click)="toConfig()">
+            <img src="assets/icons/gear-primary.svg" (click)="toConfig()">
         }
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { PokeapiService } from '../../../core/services/pokeapi-service';
 import { Button } from "../../../core/components/button/button";
 import { CustomInput } from "../../../shared/components/custom-input/custom-input";
@@ -11,6 +11,9 @@ import { Bet, BetDTO, NumBet } from '../../../shared/models/Bet';
 import { TypeBet } from '../../../shared/models/TypeBet';
 import { catchError, map } from 'rxjs';
 import { UserDTO } from '../../../shared/models/UserDTO';
+
+declare var bootstrap: any;
+
 
 interface Pokemon{
   id:number;
@@ -29,6 +32,8 @@ export class Pokemons {
   constructor(private cdr: ChangeDetectorRef){}
 
   private pokeAPIService = inject(PokeapiService);
+
+  messageToast:string = "";
 
   bet:Bet = new Bet();
   betDTO:BetDTO = {
@@ -90,10 +95,13 @@ export class Pokemons {
     this.pokemons$ = this.pokeAPIService.findPokemon(term).pipe(
       map(pokemon => [pokemon]), 
       catchError(err => {
-        alert("Pokémon não encontrado!");
+        this.showToast("Pokémon não encontrado!");
         return this.pokeAPIService.getPokemons(24, this.start);
       })
     );
+  }
+  showLimit(){
+    this.showToast("Você atingiu o limite de seleções!");
   }
   next(){
     this.pokeAPIService.postBet(this.betDTO).subscribe({
@@ -106,11 +114,11 @@ export class Pokemons {
             this.results='drawn';
             this.cdr.detectChanges();
           },error:(err)=>{
-            alert("Resultado não encontrado");
+            this.showToast("Resultado não encontrado");
           }
         })        
       },error:(err)=> {
-        alert(err);
+        this.showToast(err.error.message);
         console.log("deu aqui aqui",err);
       },
     })
@@ -136,7 +144,6 @@ export class Pokemons {
   }
 
   factor(betDTO:BetDTO):number{
-    if(betDTO.typeBet=='POKEMON'){
       switch(betDTO.listNumber.length){
         case 1: 
           return 1000;
@@ -156,19 +163,6 @@ export class Pokemons {
         default:
           return 1000;
       }
-    } 
-    else{
-      switch(betDTO.listNumber.length){
-        case 1:
-          return 7;
-        
-        case 2:
-          return 3;
-        
-        default:
-          return 7;
-      }
-    }
   }
   togglerPokemon(pokemon: Pokemon) {
     const config = TypeBet[this.betDTO.typeBet as keyof typeof TypeBet];    
@@ -189,7 +183,7 @@ export class Pokemons {
             
             this.betDTO.listNumber = [...this.betDTO.listNumber];
         } else {
-            alert(`Limite de ${config.maxBet} atingido!`);
+            this.showToast(`Limite de ${config.maxBet} atingido!`);
         }
     }
   }
@@ -208,5 +202,15 @@ export class Pokemons {
     if(conf==false){
       this.results='none';
     }
+  }
+  @ViewChild('liveToast', { static: true }) toastElement!: ElementRef;
+
+  showToast(text: string) {
+    this.messageToast = text;
+    
+    this.cdr.detectChanges();
+
+    const toastInstance = new bootstrap.Toast(this.toastElement.nativeElement);
+    toastInstance.show();
   }
 }
