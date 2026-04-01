@@ -42,7 +42,7 @@ export class Registro {
     event.preventDefault();
       this.user.add(this.registerDTO.name,this.registerDTO.email,this.registerDTO.password,this.registerDTO.theme).subscribe({
         next: (dados) => {
-          alert(`Usuário ${dados.name} cadastrado!`);
+          this.showToast(`Usuário ${dados.name} cadastrado!`);
           this.router.navigate(['principal'])
           
         },

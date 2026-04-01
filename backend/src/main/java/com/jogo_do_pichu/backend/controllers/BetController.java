@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bet")
+@CrossOrigin(origins = "*")
 public class BetController {
 
     @Autowired

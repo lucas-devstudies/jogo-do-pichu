@@ -5,6 +5,7 @@ import { Bet, BetDTO } from '../../shared/models/Bet';
 import { TokenService } from './token-service';
 import { Pokemons } from '../../features/principal/pokemons/pokemons';
 import { PageResponse } from '../utils/pageResponse';
+import { environment } from '../../../environments/environment';
 
 interface Region {
   id:number;
@@ -24,7 +25,7 @@ interface Pokemon{
 export class PokeapiService {
 
   private urlImage = '/assets/cities';
-  private urlBase = 'http://localhost:8080';
+  private urlBase = environment.SERVIDOR;
   private baseUrl = 'https://pokeapi.co/api/v2/pokemon';
   private imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 

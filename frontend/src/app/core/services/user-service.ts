@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environments';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from './token-service';
 import { User } from '../../shared/models/User';
@@ -13,7 +13,7 @@ import { UserDTO } from '../../shared/models/UserDTO';
 })
 export class UserService {
   
-  caminho = environment.apiUrl;
+  caminho = environment.SERVIDOR;
   API = `${this.caminho}/auth/user`;
 
   constructor(private http:HttpClient, private tokenService:TokenService){}
