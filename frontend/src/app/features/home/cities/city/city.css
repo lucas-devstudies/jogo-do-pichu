@@ -39,5 +39,7 @@
   .city img{
     width: 100%;
   }
-
+  .clicked img{
+    padding: 0 ;
+  }
 }

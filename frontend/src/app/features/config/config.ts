@@ -18,7 +18,7 @@ export class Config {
 
   logout(){
     this.tokenService.logout();
-    this.router.navigate(['principal']);
+    this.router.navigate(['home']);
   }
   toConfig(){
     this.pagina="about";

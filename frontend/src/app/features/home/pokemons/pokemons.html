@@ -22,7 +22,7 @@
     <div class="search d-flex gap-2">
         <app-custom-input
             type="search"
-            class="search-input w-100"
+            class="search-input"
             type_input="text"
             placeholder="Pikachu"
             [(value)]="input_text"
@@ -88,7 +88,7 @@
         (click)="change()"
     ></app-button>
 </form>
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
+<div class="toast-container position-fixed top-0 end-0 p-3">
     <div #liveToast class="toast bg-dark text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
         
         <div class="toast-header bg-dark text-white border-bottom border-secondary">

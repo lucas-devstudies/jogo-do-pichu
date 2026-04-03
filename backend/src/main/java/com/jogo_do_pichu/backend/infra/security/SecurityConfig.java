@@ -21,7 +21,6 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -35,33 +34,46 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // 1. Ativa o CORS com as configurações do Bean 'corsConfigurationSource'
+                .cors(Customizer.withDefaults())
+                // 2. Desativa CSRF (comum em APIs Stateless com Token)
                 .csrf(csrf -> csrf.disable())
+                // 3. Define que não manteremos estado no servidor (Stateless)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        // Libera o pre-flight (OPTIONS) para o navegador verificar permissões
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                // 4. Adiciona seu filtro de JWT antes do filtro de usuário/senha
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // Em vez de "*", definimos exatamente quem pode acessar
+        config.setAllowedOrigins(List.of("http://localhost:4200","http://52.67.174.158","http://52.67.174.158/"));
+
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setExposedHeaders(List.of("Authorization", "Content-Type"));
+
+        // Importante: permite o envio de Cookies ou Headers de Autenticação
+        config.setAllowCredentials(true);
+
+        // Expõe o header Authorization para o Angular conseguir ler o Token se necessário
+        config.setExposedHeaders(List.of("Authorization"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        return source;
     }
 
-    // O QUE ESTAVA FALTANDO:
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
