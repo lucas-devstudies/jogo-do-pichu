@@ -14,13 +14,13 @@ interface RegisterDTO {
 }
 
 @Component({
-  selector: 'app-registro',
+  selector: 'app-register',
   imports: [Button, CustomInput],
-  templateUrl: './registro.html',
-  styleUrl: './registro.css',
+  templateUrl: './register.html',
+  styleUrl: './register.css',
 })
 
-export class Registro {
+export class Register {
   
   registerDTO:RegisterDTO = {
     name:'',
@@ -43,7 +43,7 @@ export class Registro {
       this.user.add(this.registerDTO.name,this.registerDTO.email,this.registerDTO.password,this.registerDTO.theme).subscribe({
         next: (dados) => {
           this.showToast(`Usuário ${dados.name} cadastrado!`);
-          this.router.navigate(['principal'])
+          this.router.navigate(['login'])
           
         },
         error: (err) => {
@@ -54,7 +54,7 @@ export class Registro {
     });
   }
   reverse(){
-    this.router.navigate(['entrar'])
+    this.router.navigate(['login'])
   }
   @ViewChild('liveToast', { static: true }) toastElement!: ElementRef;
 

@@ -23,7 +23,7 @@
 .welcome p{
     font-size: 1.0rem;
 }
-app-opcoes,app-cidades,app-pokemons{
+app-options,app-cities,app-pokemons{
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -39,7 +39,7 @@ app-opcoes,app-cidades,app-pokemons{
     .welcome{
         margin-top: 0.2rem;
     }
-    app-opcoes,app-cidades,app-pokemons{
+    app-options,app-cities,app-pokemons{
         display: flex;
         width: 100%;
         flex-direction: column;

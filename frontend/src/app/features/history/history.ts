@@ -4,9 +4,9 @@ import { Menu } from "../../core/components/menu/menu";
 import { PokeapiService } from '../../core/services/pokeapi-service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { City } from "../principal/cidades/city/city";
-import { PokemonCard } from "../principal/pokemons/pokemon-card/pokemon-card";
 import { Button } from "../../core/components/button/button";
+import { City } from '../home/cities/city/city';
+import { PokemonCard } from '../home/pokemons/pokemon-card/pokemon-card';
 
 @Component({
   selector: 'app-history',

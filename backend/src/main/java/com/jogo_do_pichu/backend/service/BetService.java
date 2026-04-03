@@ -69,12 +69,11 @@ public class BetService {
         Pageable pageable = PageRequest.of(page, 5);
         return betRepository.findByUserEmailWithNumbers(email, pageable);
     }
+
     private int randomBet(Bet bet) {
         //Para uso normal
         int max_bet = bet.getTypeBet().getSizeBet();
 
-        //Para teste com bumbassaur
-        //int max_bet = 2;
         return ThreadLocalRandom.current().nextInt(1, max_bet+1);
     }
 

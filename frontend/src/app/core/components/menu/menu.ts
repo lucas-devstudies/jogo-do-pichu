@@ -17,7 +17,7 @@ export class Menu {
     this.router.navigate(['config']);
   }
   toHome(){
-    this.router.navigate(['principal']);
+    this.router.navigate(['home']);
   }
   toAccount(){
     this.router.navigate(['account']);

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable,lastValueFrom,map, of } from 'rxjs';
 import { Bet, BetDTO } from '../../shared/models/Bet';
 import { TokenService } from './token-service';
-import { Pokemons } from '../../features/principal/pokemons/pokemons';
 import { PageResponse } from '../utils/pageResponse';
 import { environment } from '../../../environments/environment';
 

@@ -39,7 +39,7 @@ export class Login {
     this.auth.login(this.loginDTO.email,this.loginDTO.password).subscribe({
       next: (res) => {
         localStorage.setItem('token', res.token);
-        this.router.navigate(['principal']);
+        this.router.navigate(['home']);
       },
       error: (err) => {
         const mensagemErro = err.error?.message || 'Erro inesperado ao fazer login';
@@ -48,7 +48,7 @@ export class Login {
     });
   }
   reverse(){
-    this.router.navigate(['registro'])
+    this.router.navigate(['register'])
   }
   @ViewChild('liveToast', { static: true }) toastElement!: ElementRef;
 

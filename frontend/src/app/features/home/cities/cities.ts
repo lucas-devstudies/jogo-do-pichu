@@ -10,7 +10,6 @@ import { ModalResults } from "../../../shared/components/modal-results/modal-res
 import { Bet, BetDTO, NumBet } from '../../../shared/models/Bet';
 import { TypeBet } from '../../../shared/models/TypeBet';
 import { UserDTO } from '../../../shared/models/UserDTO';
-
 declare var bootstrap: any;
 
 interface Region{
@@ -20,12 +19,12 @@ interface Region{
 }
 
 @Component({
-  selector: 'app-cidades',
+  selector: 'app-cities',
   imports: [Button, CommonModule, FormsModule, City, CustomInput, BackButton, ModalResults],
-  templateUrl: './cidades.html',
-  styleUrl: './cidades.css',
+  templateUrl: './cities.html',
+  styleUrl: './cities.css',
 })
-export class Cidades implements AfterViewInit{
+export class Cities implements AfterViewInit{
 
   @Input()
   userDTO!:UserDTO;
@@ -127,7 +126,7 @@ export class Cidades implements AfterViewInit{
       },
     })
   }
- back(){
+  back(){
     this.voltar.emit("voltar");
   }
   formatedValue(value:number):number{
@@ -180,7 +179,6 @@ export class Cidades implements AfterViewInit{
                 name:region.name
             };
             this.betDTO.listNumber.push(nb);
-            
             this.betDTO.listNumber = [...this.betDTO.listNumber];
         } else {
             this.showToast(`Limite de ${config.maxBet} atingido!`);

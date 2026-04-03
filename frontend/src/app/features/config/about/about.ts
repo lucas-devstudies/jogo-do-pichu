@@ -2,13 +2,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { BackButton } from "../../../shared/components/back-button/back-button";
 
 @Component({
-  selector: 'app-sobre',
+  selector: 'app-about',
   imports: [BackButton],
-  templateUrl: './sobre.html',
-  styleUrl: './sobre.css',
+  templateUrl: './about.html',
+  styleUrl: './about.css',
 })
-export class Sobre {
-
+export class About {
   @Output() voltar = new EventEmitter<string>();
 
   back(){
