@@ -111,7 +111,6 @@ export class Cities implements AfterViewInit{
     this.pokeAPIService.postBet(this.betDTO).subscribe({
       next:(bet)=>{
         this.bet = bet;
-        console.log(bet);
         this.pokeAPIService.findRegion(this.bet.result).subscribe({
           next:(region)=>{
             this.sortRegion = region;

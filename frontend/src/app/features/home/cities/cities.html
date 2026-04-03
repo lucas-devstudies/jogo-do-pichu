@@ -45,7 +45,7 @@
             placeholder="20,00"
             [(value)]="betDTO.balance"
         ></app-custom-input>
-        <p class="fw-bold text-center mt-2">( Saldo: R$ {{userDTO.balance}} )</p>
+        <p class="fw-bold text-center mt-2">( Saldo: R$ {{userDTO?.balance}} )</p>
     </div>
     <app-button
         class="w-100"

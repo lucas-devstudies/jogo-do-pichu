@@ -47,7 +47,6 @@ export class Register {
           
         },
         error: (err) => {
-          console.log(err)
           const mensagemErro = err.error?.message || 'Erro inesperado ao fazer login';
           this.showToast(mensagemErro);
         }

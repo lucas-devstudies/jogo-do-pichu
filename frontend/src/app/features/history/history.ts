@@ -7,6 +7,15 @@ import { CommonModule } from '@angular/common';
 import { Button } from "../../core/components/button/button";
 import { City } from '../home/cities/city/city';
 import { PokemonCard } from '../home/pokemons/pokemon-card/pokemon-card';
+import { Observable } from 'rxjs';
+
+
+interface Pokemon{
+  id:number;
+  name:string;
+  img:string;
+}
+
 
 @Component({
   selector: 'app-history',
@@ -33,18 +42,16 @@ export class History implements AfterViewInit{
   }
 
   async loadBets(page: number) {
-    if (this.isLoading()) return; // Trava para não clicar mil vezes
+    if (this.isLoading()) return;
     
     this.isLoading.set(true);
     try {
       const res = await this.pokeAPIService.findMyBets(page);
       
-      // Atualizamos os signals
       this.bets.set(res.content);
       this.currentPage.set(res.number);
       this.isLastPage.set(res.last);
       
-      // Se precisar resetar o scroll, chama aqui
       setTimeout(() => this.configurarScroll(), 50);
     } catch (error) {
       console.error('Erro ao buscar apostas:', error);

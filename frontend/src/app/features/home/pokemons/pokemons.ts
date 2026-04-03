@@ -107,7 +107,6 @@ export class Pokemons {
     this.pokeAPIService.postBet(this.betDTO).subscribe({
       next:(bet)=> {
         this.bet = bet;
-        console.log(bet);
         this.pokeAPIService.findPokemon(this.bet.result).subscribe({
           next:(pokemon)=> {
             this.sortPokemon = pokemon;
@@ -119,7 +118,6 @@ export class Pokemons {
         })        
       },error:(err)=> {
         this.showToast(err.error.message);
-        console.log("deu aqui aqui",err);
       },
     })
   }
