@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environments';
 import { TokenService } from '../services/token-service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Token } from '../../shared/models/Token';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
-  apiUrl:string = environment.apiUrl;
+  apiUrl:string = environment.SERVIDOR;
 
   constructor(private http:HttpClient,private tokenService: TokenService){}
 

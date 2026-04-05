@@ -1,7 +1,22 @@
+import { TypeBetName } from "./TypeBet";
+
 export class Bet{
-    type!:TypeBet;
+    id!:number;
+    typeBet!:TypeBetName;
+    listNumber!:NumBet[]
+    balance!:number;
+    value!:number;
+    returnBet!:number;
+    createdAt!:string;
+    result!:number;
 }
-export enum TypeBet{
-    "Pokemon",
-    "Region"
+export class NumBet{
+    id?:number;
+    number!:number;
+    name!:string;
+}
+export class BetDTO{
+    typeBet!:TypeBetName;
+    listNumber!:NumBet[]
+    balance!:number;
 }

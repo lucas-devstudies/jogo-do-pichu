@@ -2,28 +2,82 @@
     <app-menu class="vh-100" select="history"></app-menu>
     <section class="main">
         <div class="option animacao">
-            <h3>Histórico de Aposta</h3>
-            @if (historical.length>0) {
-                <div class="accordion mt-2 w-100" data-bs-theme="dark" id="accordionPanelsStayOpenExample">
-                    @for (item of historical; track $index) {}
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                            a
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            <h3 class="fw-bold w-100 text-center py-3">Histórico de Aposta</h3>
+            @if (bets().length>0) 
+            {
+                @for (bet of bets(); track bet.id) {
+                    <div class="accordion mt-2 w-100" data-bs-theme="dark" id="accordionHistory-{{bet.id}}">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" 
+                                        data-bs-toggle="collapse" 
+                                        [attr.data-bs-target]="'#collapse-' + bet.id" 
+                                        aria-expanded="false" 
+                                        [attr.aria-controls]="'collapse-' + bet.id">
+                                    {{ bet.createdAt | date:'dd/MM/yyyy HH:mm' }}
+                                </button>
+                            </h2>
+
+                            <div [id]="'collapse-' + bet.id" class="accordion-collapse collapse" 
+                                    [attr.data-bs-parent]="'#accordionHistory-' + bet.id">
+                                <div class="accordion-body">
+                                    <p>Tipo de Aposta: <span class="fw-bold">{{ bet.typeBet }}</span></p>
+                                    <p>Valor Apostado: <span class="fw-bold">{{ bet.balance | currency:'BRL' }}</span></p>                                        
+                                    <hr>
+                                    <div #scrollContainer class="listBet gap-2">
+                                        @if(bet.typeBet=="REGION"){
+                                            @for (region of bet.listNumber; track $index) {
+                                                <app-city
+                                                    [img] = getImage(bet,region.number)
+                                                    [name] = region.name
+                                                >
+                                                </app-city>
+                                            }
+                                        }@else{
+                                            @for (pokemon of bet.listNumber; track $index) {
+                                                <app-pokemon-card
+                                                    [id] = pokemon.number!
+                                                    [img] = getImage(bet,pokemon.number)
+                                                    [name] = pokemon.name
+                                                ></app-pokemon-card>
+                                            }
+                                        }
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <p>Retorno:</p>
+                                        <p>{{ bet.value | currency:'BRL' }}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                }
+                <div class="d-flex w-100 gap-3 mt-3 justify-content-between">
+                    <button 
+                        class="navBets"
+                        type="button" 
+                        (click)="$event.preventDefault(); prevPage()" 
+                        [disabled]="currentPage() === 0 || isLoading()">
+                        Anterior
+                    </button>
+
+
+                    <button 
+                        class="navBets"
+                        type="button" 
+                        (click)="$event.preventDefault(); nextPage()" 
+                        [disabled]="isLastPage() || isLoading()">
+                        {{ isLoading() ? 'Carregando...' : 'Próximo' }}
+                    </button>
                 </div>
-            </div>
-        }
-        @else {
-            <img src="assets/icons/not-found.png">
-            <p class="text-center">O Pichu procurou tanto<br>que voltou evoluído</p>
-        }
+            }
+            @else {
+               <div class="d-flex flex-column align-items-center">
+                 <img src="assets/icons/not-found.png" style="width: 8rem;">
+                <p class="text-center">O Pichu procurou tanto<br>que voltou evoluído</p>
+               </div>
+            }
         </div>
     </section>
 </div>

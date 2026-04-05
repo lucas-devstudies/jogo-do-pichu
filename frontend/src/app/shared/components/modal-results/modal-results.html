@@ -1,6 +1,8 @@
 <div class="option modal-result gap-2 d-flex flex-column justify-content-center align-items-center">
     <h2 class="fw-bold">{{title}}</h2>
-    <img src={{img}} alt="">
+    @if(this.title!='Atenção'){
+        <img src={{img}} alt="" [class.imgAlt]="imgAlt">
+    }
     <div class="texts mb-2 p-0 d-flex flex-column w-100">
         @if(textBet!=""){
             <p>{{textBet}}</p>
@@ -15,4 +17,13 @@
         (click)="clickButton()"
     >
     </app-button>
+    @if (backed==true) {
+        <app-button
+            type="outline"
+            class="w-100"
+            text="Cancelar"
+            (click)="clickBack()"
+        >
+        </app-button>
+    }
 </div>

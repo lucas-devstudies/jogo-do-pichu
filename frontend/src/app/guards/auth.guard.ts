@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   // Se não houver token → redireciona
   if (!token) {
-    return router.parseUrl('/entrar');
+    return router.parseUrl('/login');
   }
 
   // Se o token for inválido/expirado → limpar e redirecionar

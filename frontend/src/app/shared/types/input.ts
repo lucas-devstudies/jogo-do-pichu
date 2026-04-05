@@ -1,1 +1,1 @@
-export type CustomInputValue = string | number;
+export type CustomInputValue = string | number | BigInt;

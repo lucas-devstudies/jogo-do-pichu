@@ -22,8 +22,8 @@
     border-radius: 2rem;
     max-width: 600px;
 }
-.right-login{
-    @media(max-width:759px){
+@media(max-width:759px){
+    .right-login{
         display: none;
     }
 }

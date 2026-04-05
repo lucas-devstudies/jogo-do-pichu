@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environments';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from './token-service';
 import { User } from '../../shared/models/User';
 import { Observable } from 'rxjs';
 import { toFormData } from '../utils/form-data';
 import { Token } from '../../shared/models/Token';
+import { UserDTO } from '../../shared/models/UserDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   
-  caminho = environment.apiUrl;
+  caminho = environment.SERVIDOR;
   API = `${this.caminho}/auth/user`;
 
   constructor(private http:HttpClient, private tokenService:TokenService){}
@@ -31,9 +32,9 @@ export class UserService {
     const formData = toFormData(data);
     return this.http.post<User>(`${this.API}change-password/`, formData,{headers});
   }
-  me(): Observable<User>{
+  me(): Observable<UserDTO>{
     const headers = this.tokenService.getAuthHeaders();
-    return this.http.get<User>(`${this.API}me/`,{headers});
+    return this.http.get<UserDTO>(`${this.caminho}/user/me`,{headers});
   }
   get_security(): Observable<User>{
     const headers = this.tokenService.getAuthHeaders();

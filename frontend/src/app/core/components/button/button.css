@@ -8,12 +8,20 @@ button{
     height: auto;
     font-family: "Quicksand", sans-serif;
     font-size: 1rem;
+    font-weight: bold;
 }
 button:hover{
     opacity: 80%;
 }
 button:active{
     opacity: 60%;
+}
+.outline{
+    background-color: transparent;
+    border: 0.1rem solid var(--color-primary);
+}
+.outline:hover,.outline:active{
+    background-color: var(--color-primary);
 }
 
 @media (max-width:700px){

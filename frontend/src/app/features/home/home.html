@@ -1,0 +1,26 @@
+<div class="container-fluid m-0 p-0 d-flex flex-row">
+    <app-menu class="vh-100"></app-menu>
+    <section class="main">
+        @if (atual == 'home') {
+            <div class="welcome">
+                <h3>Olá, <span class="fw-bold">{{ ( me$ | async )?.name }}!</span></h3>
+                <p>Que tal apostar no seu <span class="fw-bold">Pokémon</span> ou <span class="fw-bold">Região favoritos?</span></p>
+            </div>
+            <app-options
+                class="animacao"
+                (opcaoSelecionada)="opcoesProx($event)" 
+            ></app-options>
+        }
+        @else if (atual == 'city') {
+            <app-cities
+                [userDTO]="(me$ | async)!"
+                (voltar)="back()">    
+            </app-cities>
+        }@else if (atual == 'pokemons') {
+            <app-pokemons
+                [userDTO]="(me$ | async)!"
+                (voltar)="back()">    
+            </app-pokemons>
+        }
+    </section>
+</div>

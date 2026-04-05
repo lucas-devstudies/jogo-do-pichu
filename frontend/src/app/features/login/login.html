@@ -19,7 +19,6 @@
                     ></app-custom-input>
                     <app-button
                         text="Entrar"
-                        type="primary"
                         (click)="confirmar($event)"
                     >
                     </app-button>
@@ -29,7 +28,21 @@
                 </div>
         </div>
     </div>
-        <div class="right-login" style="background-color: var(--color-primary); overflow: hidden;">
+    <div class="right-login" style="background-color: var(--color-primary); overflow: hidden;">
         <img style="height: 100%; background-position: center;" src="/assets/bg-register.png">
+    </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div #liveToast class="toast bg-dark text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            
+            <div class="toast-header bg-dark text-white border-bottom border-secondary">
+            <strong class="me-auto">Erro ao Logar</strong>
+            <small>Agora</small>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+
+            <div class="toast-body">
+            {{messageToast}}
+            </div>
+        </div>
     </div>
 </section>

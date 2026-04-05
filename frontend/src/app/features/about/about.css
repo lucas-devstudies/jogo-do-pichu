@@ -1,0 +1,38 @@
+.menu{
+  display: flex;
+  width: 90%;
+  max-width: 30rem;
+  cursor: pointer;
+}
+img{
+    display: flex;
+    width: 90%;
+    max-width: 30rem;
+    animation: normal toBottom 1s;
+}
+.about{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 30rem;
+    height: wrap;
+    background-color: var(--color-details);
+    padding: 1rem;
+    border-radius: 1rem;
+    animation: normal toBottom 1s;
+    margin-bottom: 5rem;
+}    
+h3{
+    opacity: 0.8;
+}
+.navbar{
+    background-color: var(--color-details) !important;
+}
+button{
+    font-weight: bold;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: var(--color-primary);
+    
+}

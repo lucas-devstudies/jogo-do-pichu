@@ -1,0 +1,161 @@
+<div class="menu mb-1 mt-2">
+    <app-back-button (click)="back()"></app-back-button>
+</div>
+
+<form class="option animacao">
+    <h2 class="fw-bold w-100 text-center">
+        Selecione qual ou quais Pokémons você deseja apostar
+        <span class="fw-bold" style="color: var(--color-warning);">(max 5)</span>
+    </h2>
+
+    <div class="info d-flex justify-content-between">
+        <div class="info_container">
+            <h3 class="w-100 text-center">Escolha</h3>
+            <p class="w-100 fw-bold text-center">{{betDTO.listNumber.length}}/{{ pokemonNumber$}}</p>
+        </div>
+        <div class="info_container">
+            <h3 class="w-100 text-center">Retorno</h3>
+            <p class="w-100 fw-bold text-center">{{factor(betDTO)}}x</p>
+        </div>
+    </div>
+
+    <div class="search d-flex gap-2">
+        <app-custom-input
+            type="search"
+            class="search-input"
+            type_input="text"
+            placeholder="Pikachu"
+            [(value)]="input_text"
+        ></app-custom-input>
+        <button type="button" class="search-button" (click)="search()">Pesquisar</button>
+    </div>
+
+    <div class="pokemons p-1 mb-3">
+        @for (pokemon of pokemons$ | async; track pokemon.id) {
+            <app-pokemon-card
+                [id]="pokemon.id"
+                [img]="pokemon.img"
+                [name]="pokemon.name"
+                [isLimitExceeded]="isMaxLimitExceeded"
+                (showLimitMessage)="showLimit()"
+                [isSelected]="checkSelected(pokemon.id)"
+                (returnId)="togglerPokemon(pokemon)"
+            >
+            </app-pokemon-card>
+        }
+    </div>
+
+    <div class="gap-2 d-flex justify-content-between">
+        <button 
+            type="button" 
+            class="navPoke"
+            (click)="backPokemons()" 
+            [disabled]="start === 0">
+                Anterior
+        </button>
+
+        <button 
+            type="button" 
+            class="navPoke"
+            (click)="nextPokemons()" 
+            [disabled]="start >= 1008">
+                Próximo
+        </button>
+    </div>
+
+    <div class="payment">
+        <div class="d-flex justify-content-between mb-2">
+            <h3 class="fw-bold d-flex">Custo</h3>
+            <div class="return d-flex">
+                <h3 class="w-100">Retorno<span class="fw-bold">R$ {{ formatedValue(betDTO.balance) }}</span></h3>
+            </div>
+        </div>
+        
+        <app-custom-input
+            type="card"
+            class="card_value"
+            type_input="number"
+            placeholder="20,00"
+            [(value)]="betDTO.balance"
+        ></app-custom-input>
+
+        <p class="fw-bold text-center mt-2">( Saldo: R$ {{userDTO?.balance}} )</p>
+
+    </div>
+
+    <app-button
+        class="w-100"
+        text="Confirmar"
+        (click)="change()"
+    ></app-button>
+</form>
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div #liveToast class="toast bg-dark text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        
+        <div class="toast-header bg-dark text-white border-bottom border-secondary">
+        <strong class="me-auto">Atenção</strong>
+        <small>Agora</small>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+
+        <div class="toast-body">
+        {{messageToast}}
+        </div>
+    </div>
+</div>
+@if (results == "confirm") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Atenção"
+            textBet="Você deseja confirmar a sua aposta no valor de R$ {{betDTO.balance}} em {{formatedList}}?"
+            text_button="Confirmar"
+            [backed]="true"
+            (closed)="closeConfModal(conf)"
+            (selected)="next()"
+            ></app-modal-results>
+        </div>
+}
+    @if (results == 'drawn') {
+        <div class="modal-overlay">
+            <app-modal-results
+                title="Aposta Realizada!"
+                img="assets/icons/check.png"
+                textBet="Código do sorteio: {{bet.id}}"
+                text_button="Ver Resultado"
+                (selected)="showResult()"
+            ></app-modal-results>
+        </div>
+    }
+@if (results == "result") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Pokémon Sorteado!"
+            img={{sortPokemon.img}}
+            textBet={{sortPokemon.name}}
+            text_button="Confirmar"
+            (selected)="openResult()"
+        ></app-modal-results>
+    </div>
+}
+@if (results == "win") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Parabéns"
+            img="assets/icons/pichu.png"
+            [textBet]="'Você apostou R$ ' + bet.balance" 
+            [textReceived]="'e arrecadou R$ ' + bet.value"
+            text_button="Confirmar"
+            (selected)="closeModal()"
+        ></app-modal-results>
+    </div>
+}@if (results == "lose") {
+    <div class="modal-overlay">
+        <app-modal-results
+            title="Não foi dessa vez!"
+            img="assets/icons/try-again.png"
+            textBet="Mas continue, os melhores treinadores nunca desistem!"
+            text_button="Confirmar"
+            (selected)="closeModal()"
+        ></app-modal-results>
+    </div>
+}

@@ -1,0 +1,72 @@
+package com.jogo_do_pichu.backend.service;
+
+import com.jogo_do_pichu.backend.domain.User;
+import com.jogo_do_pichu.backend.dto.MeDTO;
+import com.jogo_do_pichu.backend.dto.RegisterRequestDTO;
+import com.jogo_do_pichu.backend.infra.security.TokenService;
+import com.jogo_do_pichu.backend.repositories.UserRepository;
+import jakarta.transaction.Transactional;
+import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Transactional
+    public User save(RegisterRequestDTO body){
+
+        validateUser(body);
+
+        User user = new User();
+        user.setName(body.name());
+        user.setBalance(BigDecimal.valueOf(1000.00));
+        user.setEmail(body.email());
+        user.setTheme(body.theme());
+        user.setPassword(passwordEncoder.encode(body.password()));
+
+        return this.userRepository.save(user);
+
+    }
+    private void validateUser(RegisterRequestDTO body){
+
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+
+        if(body.password() == null || body.password().isEmpty() ||body.password().length()<6){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"A senha deve possuir pelo menos 6 caracteres");
+        }
+        if (body.name() == null || body.name().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O usuário deve possuir um nome");
+        }
+        if (body.email() == null || body.email().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O usuário deve possuir um email");
+        }
+        if(!body.email().matches(emailRegex)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O formato do e-mail é inválido");
+        }
+        Optional<User> userTest = this.userRepository.findByEmail(body.email());
+        if (userTest.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Usuário já cadastrado");
+        }
+    }
+    public MeDTO me(User user){
+        return new MeDTO(
+                user.getName(),
+                user.getBalance(),
+                user.getEmail(),
+                user.getTheme()
+        );
+    }
+}

@@ -6,8 +6,8 @@
                 <img src="assets/icons/treinador.jpeg" alt="">
             </div>
             <div class="perfil_data d-flex flex-column h-100 align-items gap-2">
-                <h3 class="w-100 fw-bold m-0">Ronem Lavareda</h3>
-                <p class="w-100 m-0">Email: <span>ronem@gmail.com</span></p>
+                <h3 class="w-100 fw-bold m-0">{{ ( me$ | async )?.name }}</h3>
+                <p class="w-100 m-0">Email: <span>{{ ( me$ | async )?.email }}</span></p>
             </div>
         </div>
 
@@ -25,7 +25,7 @@
                 }
             </div>
             @if (eye=="open") {
-                <h2 class="fw-bold">R$ 1000,00</h2>
+                <h2 class="fw-bold">{{ fc((me$ | async)?.balance) }}</h2>
             }@else {
                 <h2 class="fw-bold">R$ ***,**</h2>
             }

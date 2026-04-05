@@ -33,9 +33,11 @@ public class TokenService {
             throw new RuntimeException("Erro ao tentar logar");
         }
     }
+
     private Instant generateExpirationDate(){
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-4"));
     }
+
     public String validateToken(String token){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);

@@ -1,21 +1,41 @@
-.main{
-    flex: 1;
-    display: flex;
+.listBet{
+    margin-top: 1rem;
     width: 100%;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    margin: 0;
-    margin-top: 2rem;
-    padding: 0;
-}
-.option{
+    height: auto;
+    padding-left: 0;
     display: flex;
-    width: 90%;
-    max-width: 30rem;
-    flex-direction: column;
-    z-index: 2;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+.listBet:active {
+    cursor: grabbing;
+}
+
+.listBet::-webkit-scrollbar {
+    display: none;
+}
+app-pokemon-card,app-city{
+    width: auto;
+    min-width: 10rem;
+}
+app-pokemon .pokemon h3{
+    height: fit-content;
+    border: 1px solid red;
+    color: var(--color-primary);
+}
+app-pokemon-card,app-city{
+    pointer-events: none;
+}
+.navBets{
+    font-weight: bold;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: none;
+    background-color: var(--color-primary);
+    
+}
+.navBets:disabled{
+    background-color: #ffffff96;
 }

@@ -1,7 +1,7 @@
 export class User{
     id?:string;
     name!:string;
-    balance?:BigInt;
+    balance?:number;
     email!:string;
     password!:string;
     theme!:string;
