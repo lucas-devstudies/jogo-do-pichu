@@ -53,7 +53,7 @@ class BetServiceTest {
 
         BetDTO dto = createDto(valorAposta);
 
-        Mockito.when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
         Mockito.when(betRepository.save(Mockito.any(Bet.class))).thenAnswer(i -> i.getArgument(0));
 
         Bet result = betService.save(dto, email);
@@ -85,7 +85,7 @@ class BetServiceTest {
     @Test
     void shouldThrowExceptionWhenUserNotFound() {
         String email = "nao_existe@email.com";
-        Mockito.when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(RuntimeException.class, () -> {
             betService.save(createDto(new BigDecimal("10")), email);
@@ -97,7 +97,7 @@ class BetServiceTest {
         User user = new User();
         user.setBalance(new BigDecimal("100.00"));
 
-        Mockito.when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
         Mockito.when(betRepository.save(Mockito.any(Bet.class))).thenAnswer(i -> i.getArgument(0));
 
         Bet result = betService.save(createDto(new BigDecimal("10.00")), email);
