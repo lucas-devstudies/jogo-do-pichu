@@ -6,6 +6,7 @@ import { Account } from './features/account/account';
 import { History } from './features/history/history';
 import { Register } from './features/register/register';
 import { Home } from './features/home/home';
+import { About } from './features/about/about';
 
 export const routes: Routes = [
     {path:'',redirectTo:'home',pathMatch:'full'},
@@ -14,5 +15,7 @@ export const routes: Routes = [
     {path:'account',canActivate:[authGuard],component:Account},
     {path:'history',canActivate:[authGuard],component:History},
     {path:'login',component:Login},
+    {path:'about',component:About},
     {path:'register',component:Register},
+    { path: '**', redirectTo: 'about' }
 ];

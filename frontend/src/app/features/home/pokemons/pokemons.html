@@ -38,6 +38,7 @@
                 [name]="pokemon.name"
                 [isLimitExceeded]="isMaxLimitExceeded"
                 (showLimitMessage)="showLimit()"
+                [isSelected]="checkSelected(pokemon.id)"
                 (returnId)="togglerPokemon(pokemon)"
             >
             </app-pokemon-card>

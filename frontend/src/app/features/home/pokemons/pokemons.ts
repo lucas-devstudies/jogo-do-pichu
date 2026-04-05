@@ -118,6 +118,9 @@ export class Pokemons {
         })        
       },error:(err)=> {
         this.showToast(err.error.message);
+        this.results='none';
+        this.cdr.detectChanges();
+
       },
     })
   }
@@ -195,6 +198,9 @@ export class Pokemons {
       .filter(n => !!n); 
 
     return nomes.length > 0 ? nomes.join(', ') : 'Nenhum selecionado';
+  }
+  checkSelected(id: number): boolean {
+    return this.betDTO.listNumber.some(p => p.number === id);
   }
   closeConfModal(conf:boolean){
     if(conf==false){

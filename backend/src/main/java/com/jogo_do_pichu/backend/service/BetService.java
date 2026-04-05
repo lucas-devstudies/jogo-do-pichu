@@ -7,7 +7,6 @@ import com.jogo_do_pichu.backend.domain.User;
 import com.jogo_do_pichu.backend.dto.BetDTO;
 import com.jogo_do_pichu.backend.repositories.BetRepository;
 import com.jogo_do_pichu.backend.repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -32,36 +32,33 @@ public class BetService {
 
     @Transactional
     public Bet save(BetDTO dto, String email) {
+        User user = userRepository.findByEmailWithLock(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado com o e-mail: " + email));
+        user.deductBalance(dto.balance());
 
         Bet bet = toEntity(dto);
         bet.setUser(user);
-
-        //Verificação se os valores são válidos
         validateBet(bet);
 
-        //Sorteando valores e adicionando ao resultado
         int result = randomBet(bet);
         bet.setResult(result);
-
-        //Inserindo o Retorno Esperado
         bet.setReturnBet(factor(bet));
 
         if (dto.listNumber() != null) {
             List<NumBet> numBets = dto.listNumber().stream()
-                    .map(n -> new NumBet(n.getNumber(), bet,n.getName()))
+                    .map(n -> new NumBet(n.getNumber(), bet, n.getName()))
                     .toList();
-
             bet.setListNumber(numBets);
         }
-        if(win(bet,result)){
-            bet.setValue(returnBet(bet));
-            user.addBalance(bet.getValue());
-        }else{
-            bet.setValue(BigDecimal.valueOf(0L));
-            user.deductBalance(dto.balance());
+
+        if (win(bet, result)) {
+            BigDecimal prize = returnBet(bet);
+            bet.setValue(prize);
+            user.addBalance(prize);
+        } else {
+            bet.setValue(BigDecimal.ZERO);
         }
+
         return betRepository.save(bet);
     }
 

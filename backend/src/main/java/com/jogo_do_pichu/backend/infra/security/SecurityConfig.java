@@ -34,11 +34,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 1. Ativa o CORS com as configurações do Bean 'corsConfigurationSource'
                 .cors(Customizer.withDefaults())
-                // 2. Desativa CSRF (comum em APIs Stateless com Token)
                 .csrf(csrf -> csrf.disable())
-                // 3. Define que não manteremos estado no servidor (Stateless)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
@@ -57,16 +54,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // Em vez de "*", definimos exatamente quem pode acessar
-        config.setAllowedOrigins(List.of("http://localhost:4200","http://52.67.174.158","http://52.67.174.158/"));
+        config.setAllowedOrigins(List.of("http://localhost:4200","http://56.125.221.121/","http://56.125.221.121"));
 
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
 
-        // Importante: permite o envio de Cookies ou Headers de Autenticação
         config.setAllowCredentials(true);
 
-        // Expõe o header Authorization para o Angular conseguir ler o Token se necessário
         config.setExposedHeaders(List.of("Authorization"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -64,7 +64,7 @@ export class PokeapiService {
           id: res.id,
           name: res.name,
           // Pegando a imagem oficial direto do nó complexo da PokeAPI
-          img: `${this.imageUrl}/${input}.png`
+          img: `${this.imageUrl}/${res.id}.png`
         };
         return pokemon;
       })
@@ -99,10 +99,10 @@ export class PokeapiService {
   }
 
   async findMyBets(page: number): Promise<PageResponse<Bet>> {
-  const headers = this.token.getAuthHeaders();
-  return await lastValueFrom(
-    this.http.get<PageResponse<Bet>>(`${this.urlBase}/bet/findMyBets?page=${page}`, { headers })
-  );
+    const headers = this.token.getAuthHeaders();
+    return await lastValueFrom(
+      this.http.get<PageResponse<Bet>>(`${this.urlBase}/bet/findMyBets?page=${page}`, { headers })
+    );
   }
 
   getBetImageUrl(typeBet: string, result: number): string {

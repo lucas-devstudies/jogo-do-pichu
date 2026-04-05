@@ -122,6 +122,8 @@ export class Cities implements AfterViewInit{
         })
       },error:(err)=> {
         this.showToast(err.error.message);
+        this.results = 'none';
+        this.cdr.detectChanges();
       },
     })
   }
