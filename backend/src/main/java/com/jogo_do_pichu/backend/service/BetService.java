@@ -45,7 +45,7 @@ public class BetService {
 
         int result = numberGenerator.generate(bet.getTypeBet().getSizeBet());
         bet.setResult(result);
-        bet.setReturnBet(factor(bet));
+        bet.setReturnBet(bet.getTypeBet().getFactorByQuantity(bet.getListNumber().size()));
 
         if (dto.listNumber() != null) {
             List<NumBet> numBets = dto.listNumber().stream()
@@ -105,32 +105,6 @@ public class BetService {
         bet.setListNumber(list);
 
         return bet;
-    }
-
-    private int factor(Bet bet) {
-        int factor = 0;
-
-        if (bet.getTypeBet() == TypeBet.POKEMON) {
-            factor = switch (bet.getListNumber().size()) {
-                case 1 -> 1000;
-                case 2 -> 400;
-                case 3 -> 300;
-                case 4 -> 200;
-                case 5 -> 80;
-                default -> 0;
-            };
-        } else {
-            factor = switch (bet.getListNumber().size()) {
-                case 1 -> 7;
-                case 2 -> 3;
-                default -> 0;
-            };
-        }
-        if (factor == 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A quantidade de números apostados é inválida");
-        }
-
-        return factor;
     }
 
     private BigDecimal returnBet(Bet bet){
