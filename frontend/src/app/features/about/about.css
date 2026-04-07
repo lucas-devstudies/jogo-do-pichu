@@ -25,6 +25,10 @@ img{
 h3{
     opacity: 0.8;
 }
+a{
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+}
 .navbar{
     background-color: var(--color-details) !important;
 }
