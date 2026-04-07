@@ -8,6 +8,7 @@ import com.jogo_do_pichu.backend.domain.User;
 import com.jogo_do_pichu.backend.dto.BetDTO;
 import com.jogo_do_pichu.backend.repositories.BetRepository;
 import com.jogo_do_pichu.backend.repositories.UserRepository;
+import com.jogo_do_pichu.backend.service.util.BetNumberGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,10 +20,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @ExtendWith(MockitoExtension.class)
 class BetServiceTest {
@@ -33,39 +38,117 @@ class BetServiceTest {
     @Mock
     private BetRepository betRepository;
 
+    @Mock
+    private BetNumberGenerator numberGenerator;
+
     @InjectMocks
     private BetService betService;
 
-    private BetDTO createDto(BigDecimal balance) {
+    private BetDTO createDto(BigDecimal balance, int numeroEscolhido) {
         Bet bet = new Bet();
-        return new BetDTO(TypeBet.POKEMON,List.of(new NumBet(1,bet,"Pikachu")),balance);
+        NumBet num = new NumBet(numeroEscolhido, bet, "Pikachu");
+
+        return new BetDTO(TypeBet.POKEMON, List.of(num), balance);
     }
-
+    //teste para não validar uma aposta porque o usuário não existe
     @Test
-    void shouldSaveBetSuccessfully() {
+    void shouldThrowExceptionWhenUserNotFound() {
+        String email = "nao_existe@email.com";
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            betService.save(createDto(new BigDecimal("10"),25), email);
+        });
+    }
+    //Teste para aposta inválido
+    @Test
+    void shouldThrowExceptionWhenBalanceIsZero() {
         String email = "lucas@email.com";
-        BigDecimal saldoInicial = new BigDecimal("100.00");
-        BigDecimal valorAposta = new BigDecimal("10.00");
-
         User user = new User();
-        user.setEmail(email);
-        user.setBalance(saldoInicial);
-
-        BetDTO dto = createDto(valorAposta);
+        user.setBalance(new BigDecimal("100.00"));
 
         Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        BetDTO dto = createDto(new BigDecimal("0.00"), 1);
+
+        ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class, () -> {
+            betService.save(dto, email);
+        });
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+        Assertions.assertEquals("Valor de aposta inválido", ex.getReason());
+    }
+    //teste de estouro de números apostados
+    @Test
+    void shouldThrowExceptionWhenTooManyNumbers() {
+        String email = "lucas@email.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+
+        BigDecimal valorValido = new BigDecimal("10.00");
+        List<NumBet> manyNumbers = new ArrayList<>();
+        for(int i=1; i<=6; i++) {
+            manyNumbers.add(new NumBet(i, new Bet(), "Pichu"));
+        }
+
+        BetDTO dto = new BetDTO(TypeBet.POKEMON, manyNumbers, valorValido);
+        ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class, () -> {
+            betService.save(dto, email);
+        });
+
+        Assertions.assertEquals("A quantidade de números para aposta é inválida", ex.getReason());
+    }
+    //Teste para número inválido
+    @Test
+    void shouldThrowExceptionWhenNumberIsOutOfRange() {
+        String email = "lucas@email.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        BetDTO dto = createDto(new BigDecimal("10.00"), 1026);
+
+        ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class, () -> {
+            betService.save(dto, email);
+        });
+
+        Assertions.assertEquals("Número inválido", ex.getReason());
+    }
+    //teste para validar aposta, com o resultado sendo derrota
+    @Test
+    void shouldDecreaseBalanceWhenBetIsLost() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(50);
         Mockito.when(betRepository.save(Mockito.any(Bet.class))).thenAnswer(i -> i.getArgument(0));
 
-        Bet result = betService.save(dto, email);
+        BetDTO dto = createDto(new BigDecimal("10.00"), 1);
+        betService.save(dto, email);
 
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(user, result.getUser());
-        Assertions.assertNotNull(result.getResult(), "O resultado do sorteio não deve ser nulo");
+        BigDecimal expectedBalance = new BigDecimal("90.00");
+        Assertions.assertEquals(expectedBalance, user.getBalance(), "O saldo deveria ser apenas subtraído em caso de derrota");
+    }
+    //teste para validar aposta, com o resultado sendo vitória
+    @Test
+    void shouldIncreaseBalanceWhenBetIsWon() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
 
-        Assertions.assertNotEquals(saldoInicial, user.getBalance(), "O saldo do usuário deveria ter sido atualizado");
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(25);
+        Mockito.when(betRepository.save(Mockito.any(Bet.class))).thenAnswer(i -> i.getArgument(0));
 
+        betService.save(createDto(new BigDecimal("10.00"), 25), email);
+
+        BigDecimal expectedBalance = new BigDecimal("10100.00");
+        Assertions.assertEquals(expectedBalance, user.getBalance(), "O saldo deve ser: 100 + (10*1000)");
         Mockito.verify(betRepository, Mockito.times(1)).save(Mockito.any(Bet.class));
     }
+    //Retorno de página de aposta
     @Test
     void shouldReturnPageOfBetsWhenEmailExists() {
         String email = "test@gmail.com";
@@ -82,30 +165,172 @@ class BetServiceTest {
         Assertions.assertEquals(1, result.getContent().size());
         Mockito.verify(betRepository, Mockito.times(1)).findByUserEmailWithNumbers(email, pageable);
     }
-    @Test
-    void shouldThrowExceptionWhenUserNotFound() {
-        String email = "nao_existe@email.com";
-        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.empty());
+    //TESTES PARA NÚMERO DE APOSTAS
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            betService.save(createDto(new BigDecimal("10")), email);
-        });
-    }
+    //Aposta vitoriosa com 5 pokémons
     @Test
-    void shouldHandleBalanceCorrectlyAfterSave() {
+    void shouldCalculatePrizeForPokemonWith5Numbers() {
         String email = "test@test.com";
         User user = new User();
         user.setBalance(new BigDecimal("100.00"));
 
         Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(1);
+
+        List<NumBet> nums = IntStream.rangeClosed(1, 5)
+                .mapToObj(i -> new NumBet(i, new Bet(), "Pichu"))
+                .toList();
+
+        BetDTO dto = new BetDTO(TypeBet.POKEMON, nums, new BigDecimal("10.00"));
+
+        betService.save(dto, "test@test.com");
+        Assertions.assertEquals(new BigDecimal("900.00"), user.getBalance());
+    }
+    //Aposta vitoriosa com 4 pokémons
+    @Test
+    void shouldCalculatePrizeForPokemonWith4Numbers() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(1);
+
+        List<NumBet> nums = IntStream.rangeClosed(1, 4)
+                .mapToObj(i -> new NumBet(i, new Bet(), "Pichu"))
+                .toList();
+
+        BetDTO dto = new BetDTO(TypeBet.POKEMON, nums, new BigDecimal("10.00"));
+
+        betService.save(dto, "test@test.com");
+        Assertions.assertEquals(new BigDecimal("2100.00"), user.getBalance());
+    }
+    //Aposta vitoriosa com 3 pokémons
+    @Test
+    void shouldCalculatePrizeForPokemonWith3Numbers() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(1);
         Mockito.when(betRepository.save(Mockito.any(Bet.class))).thenAnswer(i -> i.getArgument(0));
 
-        Bet result = betService.save(createDto(new BigDecimal("10.00")), email);
+        List<NumBet> nums = IntStream.rangeClosed(1, 3)
+                .mapToObj(i -> new NumBet(i, new Bet(), "Pichu"))
+                .toList();
 
-        if (result.getValue().compareTo(BigDecimal.ZERO) > 0) {
-            Assertions.assertTrue(user.getBalance().compareTo(new BigDecimal("100.00")) > 0, "Ganhou mas o saldo não subiu!");
-        } else {
-            Assertions.assertEquals(new BigDecimal("90.00"), user.getBalance(), "Perdeu mas o saldo não descontou!");
-        }
+        BetDTO dto = new BetDTO(TypeBet.POKEMON, nums, new BigDecimal("10.00"));
+
+        betService.save(dto, email);
+        Assertions.assertEquals(new BigDecimal("3100.00"), user.getBalance());
     }
+    //Aposta vitoriosa com 2 pokémons
+    @Test
+    void shouldCalculatePrizeForPokemonWith2Numbers() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(1);
+
+        List<NumBet> nums = IntStream.rangeClosed(1, 2)
+                .mapToObj(i -> new NumBet(i, new Bet(), "Pichu"))
+                .toList();
+
+        BetDTO dto = new BetDTO(TypeBet.POKEMON, nums, new BigDecimal("10.00"));
+
+        betService.save(dto, "test@test.com");
+        Assertions.assertEquals(new BigDecimal("4100.00"), user.getBalance());
+    }
+    //Aposta vitoriosa com 1 pokémon
+    @Test
+    void shouldCalculatePrizeForPokemonWith1Number() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(1);
+
+        List<NumBet> nums = IntStream.rangeClosed(1, 1)
+                .mapToObj(i -> new NumBet(i, new Bet(), "Pichu"))
+                .toList();
+
+        BetDTO dto = new BetDTO(TypeBet.POKEMON, nums, new BigDecimal("10.00"));
+
+        betService.save(dto, "test@test.com");
+        Assertions.assertEquals(new BigDecimal("10100.00"), user.getBalance());
+    }
+    //Aposta com lista vazia
+    @Test
+    void shouldThrowExceptionWhenListIsEmpty() {
+        String email = "lucas@email.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+
+        // Lista vazia
+        BetDTO dto = new BetDTO(TypeBet.POKEMON, List.of(), new BigDecimal("10.00"));
+
+        ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class, () -> {
+            betService.save(dto, email);
+        });
+
+        Assertions.assertEquals("Aposta vazia", ex.getReason());
+    }
+    //Apposta com uma região
+    @Test
+    void shouldCalculatePrizeForRegionWith1Number() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(1);
+
+        // Simulando um TypeBet que não seja POKEMON
+        List<NumBet> nums = List.of(new NumBet(1, new Bet(), "Kanto"));
+        BetDTO dto = new BetDTO(TypeBet.REGION, nums, new BigDecimal("10.00"));
+
+        betService.save(dto, email);
+        Assertions.assertEquals(new BigDecimal("170.00"), user.getBalance());
+    }
+    @Test
+    void shouldCalculatePrizeForRegionWith2Number() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+        Mockito.when(numberGenerator.generate(Mockito.anyInt())).thenReturn(1);
+
+        // Simulando um TypeBet que não seja POKEMON
+        List<NumBet> nums = List.of(new NumBet(1, new Bet(), "Kanto"),new NumBet(1, new Bet(), "Kanto"));
+        BetDTO dto = new BetDTO(TypeBet.REGION, nums, new BigDecimal("10.00"));
+
+        betService.save(dto, email);
+        Assertions.assertEquals(new BigDecimal("130.00"), user.getBalance());
+    }
+    //Aposta com estouro de números apostados
+    @Test
+    void shouldThrowExceptionWhenFactorIsZeroForRegion() {
+        String email = "test@test.com";
+        User user = new User();
+        user.setBalance(new BigDecimal("100.00"));
+        Mockito.when(userRepository.findByEmailWithLock(email)).thenReturn(Optional.of(user));
+
+        List<NumBet> nums = IntStream.rangeClosed(1, 3)
+                .mapToObj(i -> new NumBet(i, new Bet(), "Kanto"))
+                .toList();
+        BetDTO dto = new BetDTO(TypeBet.REGION, nums, new BigDecimal("10.00"));
+
+        ResponseStatusException ex = Assertions.assertThrows(ResponseStatusException.class, () -> {
+            betService.save(dto, email);
+        });
+
+        Assertions.assertEquals("A quantidade de números para aposta é inválida", ex.getReason());
+    }
+
 }

@@ -9,7 +9,7 @@ import { Home } from './features/home/home';
 import { About } from './features/about/about';
 
 export const routes: Routes = [
-    {path:'',redirectTo:'home',pathMatch:'full'},
+    {path:'',redirectTo:'about',pathMatch:'full'},
     {path:'home',canActivate:[authGuard],component:Home},
     {path:'config',canActivate:[authGuard],component:Config},
     {path:'account',canActivate:[authGuard],component:Account},

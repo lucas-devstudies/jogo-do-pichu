@@ -7,6 +7,7 @@ import com.jogo_do_pichu.backend.domain.User;
 import com.jogo_do_pichu.backend.dto.BetDTO;
 import com.jogo_do_pichu.backend.repositories.BetRepository;
 import com.jogo_do_pichu.backend.repositories.UserRepository;
+import com.jogo_do_pichu.backend.service.util.BetNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class BetService {
@@ -29,6 +29,9 @@ public class BetService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BetNumberGenerator numberGenerator;
 
     @Transactional
     public Bet save(BetDTO dto, String email) {
@@ -40,9 +43,9 @@ public class BetService {
         bet.setUser(user);
         validateBet(bet);
 
-        int result = randomBet(bet);
+        int result = numberGenerator.generate(bet.getTypeBet().getSizeBet());
         bet.setResult(result);
-        bet.setReturnBet(factor(bet));
+        bet.setReturnBet(bet.getTypeBet().getFactorByQuantity(bet.getListNumber().size()));
 
         if (dto.listNumber() != null) {
             List<NumBet> numBets = dto.listNumber().stream()
@@ -66,16 +69,8 @@ public class BetService {
         Pageable pageable = PageRequest.of(page, 5);
         return betRepository.findByUserEmailWithNumbers(email, pageable);
     }
-
-    private int randomBet(Bet bet) {
-        //Para uso normal
-        int max_bet = bet.getTypeBet().getSizeBet();
-
-        return ThreadLocalRandom.current().nextInt(1, max_bet+1);
-    }
-
     private void validateBet(Bet bet) {
-        if (bet.getBalance().compareTo(BigDecimal.valueOf(0)) < 0) {
+        if (bet.getBalance().compareTo(BigDecimal.valueOf(0)) <= 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O valor apostado deve ser ao menos 1 real");
         }
         if (bet.getListNumber().isEmpty()) {
@@ -112,36 +107,10 @@ public class BetService {
         return bet;
     }
 
-    private int factor(Bet bet) {
-        int factor = 0;
-
-        if (bet.getTypeBet() == TypeBet.POKEMON) {
-            factor = switch (bet.getListNumber().size()) {
-                case 1 -> 1000;
-                case 2 -> 400;
-                case 3 -> 300;
-                case 4 -> 200;
-                case 5 -> 80;
-                default -> 0;
-            };
-        } else {
-            factor = switch (bet.getListNumber().size()) {
-                case 1 -> 7;
-                case 2 -> 3;
-                default -> 0;
-            };
-        }
-        if (factor == 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A quantidade de números apostados é inválida");
-        }
-
-        return factor;
-    }
-
     private BigDecimal returnBet(Bet bet){
-        return BigDecimal.valueOf(bet.getReturnBet()).multiply(bet.getBalance());
+        BigDecimal prize = BigDecimal.valueOf(bet.getReturnBet()).multiply(bet.getBalance());
+        return prize.add(bet.getBalance());
     }
-
     private boolean win(Bet bet, int result){
         return bet.getListNumber().stream().anyMatch(n -> n.getNumber() == result);
     }
