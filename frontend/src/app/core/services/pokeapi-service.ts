@@ -104,7 +104,6 @@ export class PokeapiService {
       this.http.get<PageResponse<Bet>>(`${this.urlBase}/bet/findMyBets?page=${page}`, { headers })
     );
   }
-
   getBetImageUrl(typeBet: string, result: number): string {
     if (typeBet === 'POKEMON') {
       return `${this.imageUrl}/${result}.png`;

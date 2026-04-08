@@ -1,3 +1,11 @@
+.option{
+  width: 90vw;
+  max-width: 30rem;
+  overflow: hidden;
+  background-color: var(--color-details);
+  padding: 1rem;
+  border-radius: 1rem;
+}
 .listBet{
     margin-top: 1rem;
     width: 100%;
@@ -16,9 +24,12 @@
 .listBet::-webkit-scrollbar {
     display: none;
 }
-app-pokemon-card,app-city{
+app-pokemon-card{
     width: auto;
     min-width: 10rem;
+}
+app-city{
+    width: auto;
 }
 app-pokemon .pokemon h3{
     height: fit-content;
