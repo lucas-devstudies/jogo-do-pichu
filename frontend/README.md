@@ -1,59 +1,61 @@
-# Frontend
+<p align="center">
+  <img src="assets/logo.png" alt="Logo Jogo do Pichu" width="200">
+</p>
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
+# 🎮 Jogo do Pichu
 
-## Development server
+> Projeto acadêmico inspirado no clássico "Jogo do Bicho", adaptado para o universo Pokémon e desenvolvido com foco em boas práticas de arquitetura e qualidade de software.
 
-To start a local development server, run:
+## 📝 Sobre o Projeto
+O **Jogo do Pichu** foi desenvolvido por **Lucas Ferreira** durante a disciplina de *Laboratório de Produção de Software*, ministrada pelo professor **Ronem Lavareda** no **IFAM Parintins**. 
 
-```bash
-ng serve
-```
+O objetivo principal foi aplicar conceitos avançados de desenvolvimento, incluindo:
+* **Testes de Software** (Unitários e Integração).
+* **Arquitetura Limpa** e princípios de **Clean Code**.
+* **Experiência do Usuário (UX)** aprimorada.
+* **Regras de Negócio** complexas aplicadas a um ambiente simulado.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## ⚡ Por que esse nome?
+O nome nasce de um trocadilho com o tradicional "Jogo do Bicho" e reflete a trajetória acadêmica do criador. Lucas Ferreira, apaixonado por Pokémon, já havia desenvolvido outros três projetos inspirados na franquia. 
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Ao chegar na disciplina do Prof. Ronem Lavareda, decidiu unir essa afinidade temática ao desafio técnico de criar uma aplicação robusta, transformando o aprendizado em algo criativo e com identidade própria. O resultado é uma mistura de humor, técnica e paixão pela tecnologia.
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🛠️ Tecnologias e Recursos
+O projeto utiliza uma stack moderna e amplamente adotada no mercado:
 
-```bash
-ng generate --help
-```
+* **Frontend:** [Angular](https://angular.io/) (Interface dinâmica e responsiva)
+* **Backend:** [Spring Boot](https://spring.io/projects/spring-boot) (API REST robusta com Java)
+* **Banco de Dados:** [MySQL](https://www.mysql.com/) (Persistência de dados)
+* **Estilização:** [Bootstrap 5](https://getbootstrap.com/)
+* **Consumo de Dados:** [PokeAPI](https://pokeapi.co/) (Base de dados dos Pokémons)
+* **Design:** [Protótipo no Figma](https://www.figma.com/design/88e1eQfMGgbBbAZTWeUenJ/Jogo-do-Pichu?node-id=18-79&t=ZAOJgHpxVcwcUsDJ-1)
 
-## Building
+---
 
-To build the project run:
+## 🐳 Como Rodar com Docker
+Para facilitar o deploy e o desenvolvimento, o projeto está totalmente "dockerizado". Certifique-se de ter o **Docker** e o **Docker Compose** instalados.
 
-```bash
-ng build
-```
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/seu-usuario/jogo-do-pichu.git](https://github.com/seu-usuario/jogo-do-pichu.git)
+    cd jogo-do-pichu
+    ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+2.  **Suba os containers:**
+    ```bash
+    docker-compose up --build
+    ```
 
-## Running unit tests
+3.  **Acesse a aplicação:**
+    * **Frontend:** `http://localhost:4200`
+    * **Backend API:** `http://localhost:8080`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## ⚠️ Nota de Esclarecimento
+Este projeto possui fins **estritamente acadêmicos e demonstrativos**. 
+> O "Jogo do Bicho" original não é permitido pela legislação brasileira. Este software é apenas uma simulação para estudo de lógica de programação e **não envolve transações financeiras reais**.

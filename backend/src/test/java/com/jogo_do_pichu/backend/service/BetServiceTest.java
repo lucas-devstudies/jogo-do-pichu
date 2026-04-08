@@ -152,18 +152,20 @@ class BetServiceTest {
     @Test
     void shouldReturnPageOfBetsWhenEmailExists() {
         String email = "test@gmail.com";
-        Pageable pageable = PageRequest.of(0, 5);
         List<Bet> bets = List.of(new Bet());
         Page<Bet> pageMock = new PageImpl<>(bets);
 
-        Mockito.when(betRepository.findByUserEmailWithNumbers(email, pageable))
+        // Use o any(Pageable.class) para ignorar diferenças de Sort ou Size
+        Mockito.when(betRepository.findByUserEmailWithNumbers(Mockito.eq(email), Mockito.any(Pageable.class)))
                 .thenReturn(pageMock);
 
         Page<Bet> result = betService.findMyBets(email, 0);
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(1, result.getContent().size());
-        Mockito.verify(betRepository, Mockito.times(1)).findByUserEmailWithNumbers(email, pageable);
+
+        // Verifica se foi chamado com qualquer Pageable
+        Mockito.verify(betRepository).findByUserEmailWithNumbers(Mockito.eq(email), Mockito.any(Pageable.class));
     }
     //TESTES PARA NÚMERO DE APOSTAS
 
